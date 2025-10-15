@@ -17,10 +17,9 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
         }
-        .tab-active, .workshop-tab-active {
-            border-color: #3b82f6;
-            color: #3b82f6;
-            font-weight: 600;
+        .tab-active {
+            background-color: #3b82f6;
+            color: white;
         }
         .pillar-active {
             background-color: #3b82f6;
@@ -62,71 +61,94 @@
         .leader-glow {
             animation: pulse-glow 2s ease-in-out infinite;
         }
+        .sidebar-tab {
+            text-align: left;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar-tab:hover {
+            background-color: rgba(55, 65, 81, 0.5);
+            border-left-color: #6b7280;
+        }
     </style>
 </head>
 <body class="text-gray-300">
 
     <header class="bg-black/90 backdrop-blur-sm sticky top-0 z-10 border-b border-gray-800">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex items-center gap-x-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-x-4">
                     <a href="https://bpcs.com/" title="Blueprint Home">
-                        <img width="150" height="30" src="https://bpcs.com/wp-content/uploads/2021/02/BlueprintLogo_White_Tiles-400x81.png" alt="Blueprint Logo">
+                        <img width="120" height="24" src="https://bpcs.com/wp-content/uploads/2021/02/BlueprintLogo_White_Tiles-400x81.png" alt="Blueprint Logo">
                     </a>
                     <span class="border-l border-gray-700 h-6"></span>
-                     <h2 class="text-lg font-semibold text-gray-400 hidden sm:block">2026 Strategic Plan</h2>
+                    <h2 class="text-base font-semibold text-gray-400 hidden sm:block">2026 Strategic Plan</h2>
                 </div>
-                <div class="flex items-center gap-x-8">
-                    <a href="https://bpcs.com/contact" class="border border-white/70 hover:border-white text-white text-sm font-semibold py-2 px-5 rounded-md transition-colors">
+                <div class="flex items-center gap-x-6">
+                    <a href="https://bpcs.com/contact" class="border border-white/70 hover:border-white text-white text-sm font-semibold py-1.5 px-4 rounded-md transition-colors">
                         Connect
                     </a>
                 </div>
             </div>
         </nav>
+        
+        <!-- Strategic Pillars in Top Bar -->
+        <div class="border-t border-gray-800 bg-gray-900/30">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                <div class="flex items-center gap-3 flex-wrap">
+                    <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Filter by Strategy:</span>
+                    <div id="pillars-inline" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <section id="executive-summary" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
-                 <h2 class="text-2xl font-bold text-white mb-4">Blueprint 2026 Strategic Initiatives</h2>
-                 <p class="text-gray-400">
-                     This interactive plan outlines our transformation into a product-first, AI-driven leader in the Databricks ecosystem. Our mission is to empower partners through decisive, data-driven action. Success will be measured not by billable hours, but by the adoption of our products and the durable, long-term success of our partners.
-                 </p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+            <section class="bg-gray-900/50 border border-gray-700 p-4 rounded-xl shadow-lg">
+                <h2 class="text-xl font-bold text-white mb-2">Blueprint 2026 Strategic Initiatives</h2>
+                <p class="text-sm text-gray-400">
+                    This interactive plan outlines our transformation into a product-first, AI-driven leader in the Databricks ecosystem. Our mission is to empower partners through decisive, data-driven action. Success will be measured not by billable hours, but by the adoption of our products and the durable, long-term success of our partners.
+                </p>
             </section>
 
-            <section id="goal-tracker" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
-                <h3 class="text-2xl font-bold text-white mb-4">Goal Tracker</h3>
-                <div class="flex justify-between items-center gap-6">
-                    <div class="grid grid-cols-2 gap-3 flex-1">
-                        <div class="bg-gray-800/50 p-3 rounded-lg border border-gray-700">
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Total KRs</p>
-                            <p id="total-krs" class="text-xl font-bold text-white">0</p>
+            <section class="bg-gray-900/50 border border-gray-700 p-4 rounded-xl shadow-lg">
+                <h3 class="text-xl font-bold text-white mb-3">Goal Tracker</h3>
+                <div class="flex justify-between items-center gap-4">
+                    <div class="grid grid-cols-2 gap-2 flex-1">
+                        <div class="bg-gray-800/50 p-2 rounded-lg border border-gray-700">
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">Total</p>
+                            <p id="total-krs" class="text-lg font-bold text-white">0</p>
                         </div>
-                        <div class="bg-gray-800/50 p-3 rounded-lg border border-gray-700">
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">Completed</p>
-                            <p id="completed-krs" class="text-xl font-bold text-emerald-500">0</p>
+                        <div class="bg-gray-800/50 p-2 rounded-lg border border-gray-700">
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">Done</p>
+                            <p id="completed-krs" class="text-lg font-bold text-emerald-500">0</p>
                         </div>
-                        <div class="bg-gray-800/50 p-3 rounded-lg border border-gray-700">
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">On Track</p>
-                            <p id="ontrack-krs" class="text-xl font-bold text-blue-500">0</p>
+                        <div class="bg-gray-800/50 p-2 rounded-lg border border-gray-700">
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">On Track</p>
+                            <p id="ontrack-krs" class="text-lg font-bold text-blue-500">0</p>
                         </div>
-                        <div class="bg-gray-800/50 p-3 rounded-lg border border-gray-700">
-                            <p class="text-xs text-gray-400 uppercase tracking-wider mb-1">At Risk</p>
-                            <p id="atrisk-krs" class="text-xl font-bold text-amber-500">0</p>
+                        <div class="bg-gray-800/50 p-2 rounded-lg border border-gray-700">
+                            <p class="text-xs text-gray-400 uppercase tracking-wider">At Risk</p>
+                            <p id="atrisk-krs" class="text-lg font-bold text-amber-500">0</p>
                         </div>
                     </div>
                     <div class="flex flex-col items-center">
                         <div class="relative">
-                            <svg class="transform -rotate-90" width="140" height="140">
-                                <circle cx="70" cy="70" r="55" stroke="#374151" stroke-width="10" fill="none"/>
-                                <circle id="progress-circle" cx="70" cy="70" r="55" stroke="#10b981" stroke-width="10" fill="none"
-                                        stroke-dasharray="345.4" stroke-dashoffset="345.4" stroke-linecap="round"
+                            <svg class="transform -rotate-90" width="120" height="120">
+                                <circle cx="60" cy="60" r="50" stroke="#374151" stroke-width="8" fill="none"/>
+                                <circle id="progress-circle" cx="60" cy="60" r="50" stroke="#10b981" stroke-width="8" fill="none"
+                                        stroke-dasharray="314" stroke-dashoffset="314" stroke-linecap="round"
                                         class="transition-all duration-1000 ease-out"/>
                             </svg>
                             <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                <span id="progress-percentage" class="text-2xl font-bold text-white">0%</span>
-                                <span class="text-xs text-gray-400">Complete</span>
+                                <span id="progress-percentage" class="text-xl font-bold text-white">0%</span>
+                                <span class="text-xs text-gray-400">Done</span>
                             </div>
                         </div>
                     </div>
@@ -134,68 +156,64 @@
             </section>
         </div>
 
-        <section id="north-star" class="mb-8">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center">2026 North Star Metrics (Stretch Goals)</h2>
-            <div id="north-star-metrics-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                </div>
-            <div id="symbol-legend" class="mt-6 flex flex-wrap justify-center items-center gap-x-6 gap-y-2 text-sm text-gray-400">
-            </div>
+        <section class="mb-6">
+            <h2 class="text-2xl font-bold text-white mb-3 text-center">2026 North Star Metrics</h2>
+            <div id="north-star-metrics-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3"></div>
+            <div id="symbol-legend" class="mt-3 flex flex-wrap justify-center items-center gap-x-4 gap-y-2 text-xs text-gray-400"></div>
         </section>
 
-        <section id="leaderboard" class="mb-8 bg-gray-900/50 border border-gray-700 p-4 rounded-xl shadow-lg">
+        <section class="mb-6 bg-gray-900/50 border border-gray-700 p-3 rounded-xl shadow-lg">
             <div class="flex items-center justify-between">
-                <h3 class="text-lg font-bold text-white">🏆 Top Performers</h3>
-                <div id="leaderboard-content" class="flex gap-6">
-                </div>
+                <h3 class="text-base font-bold text-white">🏆 Top Performers</h3>
+                <div id="leaderboard-content" class="flex gap-4"></div>
             </div>
         </section>
 
-        <section id="filters" class="mb-12">
-            <div class="p-4 bg-gray-900/50 border border-gray-700 rounded-xl flex flex-col sm:flex-row gap-4 items-center">
+        <section class="mb-6">
+            <div class="p-3 bg-gray-900/50 border border-gray-700 rounded-xl flex flex-col sm:flex-row gap-3 items-center">
                 <div class="relative flex-grow w-full sm:w-auto">
-                    <input type="search" id="okr-search" placeholder="Search objectives and key results..." class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                    <input type="search" id="okr-search" placeholder="Search objectives and key results..." class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
                     </div>
                 </div>
-                <select id="area-filter" class="bg-gray-800 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white w-full sm:w-auto">
-                    </select>
+                <select id="area-filter" class="bg-gray-800 border border-gray-600 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white w-full sm:w-auto text-sm"></select>
             </div>
         </section>
 
-        <section id="pillars" class="mb-12">
-            <h2 class="text-3xl font-bold text-white mb-6 text-center">Key Strategic Refinements</h2>
-             <p class="text-center max-w-3xl mx-auto text-gray-400 mb-6">
-                 These are the core strategies that underpin our success. Click a pillar to filter all related objectives below.
-             </p>
-            <div id="pillars-grid" class="flex flex-wrap justify-center gap-4">
-            </div>
-        </section>
+        <div id="pillar-filter-feedback" class="mb-3 text-center text-sm text-gray-400" style="display: none;"></div>
 
-        <section id="department-dive" class="mb-16">
-            <h2 class="text-3xl font-bold text-white mb-8 text-center">Departmental OKRs</h2>
-            <div id="pillar-filter-feedback" class="mb-4 text-center text-gray-400" style="display: none;"></div>
-            <div class="bg-gray-900/70 rounded-xl shadow-lg border border-gray-700">
-                <div id="tabs-container" class="border-b border-gray-700 flex flex-wrap -mb-px px-4">
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-white mb-4">Departmental OKRs</h2>
+            <div class="grid grid-cols-12 gap-4">
+                <!-- Left Sidebar -->
+                <div class="col-span-12 lg:col-span-2">
+                    <div class="bg-gray-900/70 rounded-xl shadow-lg border border-gray-700 sticky top-24">
+                        <div id="sidebar-tabs" class="flex flex-col"></div>
+                    </div>
                 </div>
-                <div id="tab-content" class="p-6 md:p-8">
+                
+                <!-- Main Content -->
+                <div class="col-span-12 lg:col-span-10">
+                    <div class="bg-gray-900/70 rounded-xl shadow-lg border border-gray-700 p-4 md:p-6">
+                        <div id="tab-content"></div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="mt-12 py-6 border-t border-gray-800">
-        <p class="text-center text-sm text-gray-500">&copy; 2026 Blueprint Technologies. All Rights Reserved.</p>
+    <footer class="py-4 border-t border-gray-800">
+        <p class="text-center text-xs text-gray-500">&copy; 2026 Blueprint Technologies. All Rights Reserved.</p>
     </footer>
 
     <div id="north-star-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 hidden z-50">
         <div class="bg-gray-800 rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] flex flex-col border border-gray-600">
-            <header class="p-5 border-b border-gray-700 flex justify-between items-center flex-shrink-0">
-                <h3 id="north-star-modal-title" class="text-xl font-bold text-white"></h3>
+            <header class="p-4 border-b border-gray-700 flex justify-between items-center flex-shrink-0">
+                <h3 id="north-star-modal-title" class="text-lg font-bold text-white"></h3>
                 <button id="north-star-modal-close" class="text-gray-400 hover:text-white text-3xl">&times;</button>
             </header>
-            <div id="north-star-modal-content" class="p-6 overflow-y-auto space-y-4">
-                </div>
+            <div id="north-star-modal-content" class="p-4 overflow-y-auto space-y-3"></div>
         </div>
     </div>
 
@@ -209,12 +227,21 @@
                 { id: "alliances", symbol: "🔗", label: "Strategic Alliances", value: "3x", sub: "Partner Bookings", description: "Achieve 3x partner-sourced bookings via Databricks and elevate Microsoft partnership status." },
             ],
             strategicPillars: [
-                { id: "duality", name: "Product Duality" },
-                { id: "flywheel", name: "Awards-to-Sales Flywheel" },
-                { id: "troika", name: "Troika Partnership Model" },
-                { id: "talent", name: "Builder vs. Scaler Model" },
-                { id: "opensource", name: "Strategic Open Source" },
+                { id: "duality", name: "Product Duality", description: "The strategy of building proprietary products (like Liftoff and Synapse) while also providing services. Balancing product-led growth with traditional consulting delivery." },
+                { id: "flywheel", name: "Awards-to-Sales Flywheel", description: "A marketing/sales strategy where winning industry awards (like Databricks Partner of the Year) creates marketing campaigns that generate leads and drive the sales pipeline in a self-reinforcing cycle." },
+                { id: "troika", name: "Troika Partnership Model", description: "The three-way partnership strategy between Blueprint, Databricks, and cloud hyperscalers (AWS, Azure, GCP). Leveraging these strategic alliances for co-selling and mutual growth." },
+                { id: "talent", name: "Builder vs. Scaler Model", description: "A dual-career talent framework: Builders (innovation-focused, work in Center of Excellence, create IP) and Scalers (delivery-focused, billable consultants who implement solutions)." },
+                { id: "opensource", name: "Strategic Open Source", description: "Releasing valuable components as open-source projects to build brand recognition, attract talent, and establish thought leadership." },
             ],
+            departmentIcons: {
+                "AI Factory": "🤖",
+                "Product": "💡",
+                "Technology": "💻",
+                "Delivery": "🚀",
+                "Sales": "🤝",
+                "Marketing": "🔥",
+                "Operations": "⚙️"
+            },
             departments: [
                  {
                     name: "AI Factory",
@@ -619,20 +646,10 @@
             "Completed": "#10b981"
         };
 
-        const BADGES = {
-            "🥇": "Gold Medal - 80%+ Complete",
-            "🥈": "Silver Medal - 60-79% Complete",
-            "🥉": "Bronze Medal - 40-59% Complete",
-            "🔥": "On Fire - Highest completion rate",
-            "⚡": "Speed Demon - Most progress this week",
-            "🎯": "Bullseye - All objectives on track",
-            "🌟": "Rising Star - Biggest improvement"
-        };
-
         document.addEventListener('DOMContentLoaded', () => {
             renderNorthStarMetrics();
             renderPillars();
-            renderTabs();
+            renderSidebarTabs();
             renderAllDepartments();
             populateAreaFilter(); 
             updateGlobalProgressTracker();
@@ -656,19 +673,22 @@
             document.getElementById('area-filter')?.addEventListener('change', applyAllFilters);
         }
 
-        function calculateDepartmentStats(dept) {
+        function calculateDepartmentStats(dept, pillarFilter = 'all') {
             let total = 0;
             let completed = 0;
             let onTrack = 0;
             let atRisk = 0;
             
             dept.objectives.forEach(obj => {
-                total += obj.keyResults.length;
-                obj.keyResults.forEach(kr => {
-                    if (kr.status === 'Completed') completed++;
-                    if (kr.status === 'On Track') onTrack++;
-                    if (kr.status === 'At Risk') atRisk++;
-                });
+                // Only count objectives that match the pillar filter
+                if (pillarFilter === 'all' || obj.pillar === pillarFilter) {
+                    total += obj.keyResults.length;
+                    obj.keyResults.forEach(kr => {
+                        if (kr.status === 'Completed') completed++;
+                        if (kr.status === 'On Track') onTrack++;
+                        if (kr.status === 'At Risk') atRisk++;
+                    });
+                }
             });
             
             const completionRate = total > 0 ? (completed / total) * 100 : 0;
@@ -677,51 +697,35 @@
             return { total, completed, onTrack, atRisk, completionRate, onTrackRate };
         }
 
-        function assignBadges(stats) {
-            const badges = [];
-            
-            if (stats.completionRate >= 80) badges.push("🥇");
-            else if (stats.completionRate >= 60) badges.push("🥈");
-            else if (stats.completionRate >= 40) badges.push("🥉");
-            
-            if (stats.onTrackRate === 100) badges.push("🎯");
-            if (stats.completionRate >= 75) badges.push("🔥");
-            
-            return badges;
-        }
-
-        function updateLeaderboard() {
+        function updateLeaderboard(pillarFilter = 'all') {
             const leaderboardContent = document.getElementById('leaderboard-content');
             if (!leaderboardContent) return;
             
             const departmentStats = strategyData.departments.map(dept => {
-                const stats = calculateDepartmentStats(dept);
+                const stats = calculateDepartmentStats(dept, pillarFilter);
                 return {
                     name: dept.name,
-                    ...stats,
-                    badges: assignBadges(stats)
+                    ...stats
                 };
-            });
+            }).filter(dept => dept.total > 0); // Only show departments with objectives matching the filter
             
             departmentStats.sort((a, b) => b.completionRate - a.completionRate);
             
-            // Check if everyone is at 0%
             const allZero = departmentStats.every(dept => dept.completionRate === 0);
             
-            if (allZero) {
+            if (allZero || departmentStats.length === 0) {
                 leaderboardContent.innerHTML = `
                     <div class="flex items-center gap-3 text-gray-400">
                         <span class="text-2xl">🏁</span>
                         <div>
-                            <p class="font-semibold">Race hasn't started yet!</p>
-                            <p class="text-sm">Complete some key results to see leaders</p>
+                            <p class="font-semibold text-sm">${departmentStats.length === 0 ? 'No matching objectives' : 'Race hasn\'t started yet!'}</p>
+                            <p class="text-xs">${departmentStats.length === 0 ? 'Try a different filter' : 'Complete some key results to see leaders'}</p>
                         </div>
                     </div>
                 `;
                 return;
             }
             
-            // Show top 3
             const topThree = departmentStats.slice(0, 3);
             const rankEmojis = ['🥇', '🥈', '🥉'];
             
@@ -729,11 +733,11 @@
                 const isLeader = index === 0;
                 return `
                     <div class="flex items-center gap-2 ${isLeader ? 'leader-glow' : ''}">
-                        <span class="text-2xl ${isLeader ? 'trophy-winner' : ''}">${rankEmojis[index]}</span>
+                        <span class="text-xl ${isLeader ? 'trophy-winner' : ''}">${rankEmojis[index]}</span>
                         <div>
-                            <p class="font-bold text-white text-sm">${dept.name}</p>
+                            <p class="font-bold text-white text-xs">${dept.name}</p>
                             <div class="flex items-center gap-2">
-                                <div class="w-20 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="w-16 h-1.5 bg-gray-700 rounded-full overflow-hidden">
                                     <div class="h-full bg-emerald-500 transition-all duration-500" style="width: ${dept.completionRate}%"></div>
                                 </div>
                                 <span class="text-xs font-semibold ${isLeader ? 'text-emerald-400' : 'text-gray-400'}">${Math.round(dept.completionRate)}%</span>
@@ -746,7 +750,7 @@
             leaderboardContent.innerHTML = leaderboardHtml;
         }
         
-        function updateGlobalProgressTracker() {
+        function updateGlobalProgressTracker(pillarFilter = 'all') {
             let totalKRs = 0;
             let completedKRs = 0;
             let onTrackKRs = 0;
@@ -754,19 +758,22 @@
             
             strategyData.departments.forEach(dept => {
                 dept.objectives.forEach(obj => {
-                    totalKRs += obj.keyResults.length;
-                    obj.keyResults.forEach(kr => {
-                        if (kr.status === 'Completed') completedKRs++;
-                        if (kr.status === 'On Track') onTrackKRs++;
-                        if (kr.status === 'At Risk') atRiskKRs++;
-                    });
+                    // Only count objectives that match the pillar filter
+                    if (pillarFilter === 'all' || obj.pillar === pillarFilter) {
+                        totalKRs += obj.keyResults.length;
+                        obj.keyResults.forEach(kr => {
+                            if (kr.status === 'Completed') completedKRs++;
+                            if (kr.status === 'On Track') onTrackKRs++;
+                            if (kr.status === 'At Risk') atRiskKRs++;
+                        });
+                    }
                 });
             });
 
             const completionPercentage = totalKRs > 0 ? (completedKRs / totalKRs) * 100 : 0;
             
             const progressCircle = document.getElementById('progress-circle');
-            const circumference = 2 * Math.PI * 55;
+            const circumference = 2 * Math.PI * 50;
             const offset = circumference - (completionPercentage / 100) * circumference;
             if(progressCircle) {
                 progressCircle.style.strokeDashoffset = offset;
@@ -780,7 +787,7 @@
             if(document.getElementById('ontrack-krs')) document.getElementById('ontrack-krs').textContent = onTrackKRs;
             if(document.getElementById('atrisk-krs')) document.getElementById('atrisk-krs').textContent = atRiskKRs;
             
-            updateLeaderboard();
+            updateLeaderboard(pillarFilter);
         }
 
         function getNorthStarSymbols(northStarIds = []) {
@@ -793,43 +800,44 @@
         function renderNorthStarMetrics() {
             const grid = document.getElementById('north-star-metrics-grid');
             const legend = document.getElementById('symbol-legend');
-            
-            let legendHtml = '<span class="font-bold text-white mr-2">Legend:</span>';
 
             strategyData.northStarMetrics.forEach(metric => {
                 const card = document.createElement('div');
-                card.className = 'bg-gray-800/50 p-4 rounded-xl border border-gray-700 shadow-lg text-center transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer flex flex-col justify-between h-48';
+                card.className = 'north-star-card bg-gray-800/50 p-3 rounded-xl border border-gray-700 shadow-lg text-center transform hover:-translate-y-1 transition-transform duration-300 cursor-pointer flex flex-col justify-between';
+                card.dataset.metricId = metric.id;
                 card.innerHTML = `
                     <div>
                         <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">${metric.label}</p>
-                        <p class="text-3xl font-bold text-blue-500 my-2">${metric.symbol} ${metric.value}</p>
-                        <p class="text-sm font-semibold text-white">${metric.sub}</p>
-                    </div>
-                    <div class="flex-shrink-0 mt-2">
-                        <p class="text-xs text-gray-400 leading-tight">${metric.description}</p>
+                        <p class="text-2xl font-bold text-blue-500 my-1">${metric.symbol} ${metric.value}</p>
+                        <p class="text-xs font-semibold text-white">${metric.sub}</p>
                     </div>
                 `;
                 card.addEventListener('click', () => showNorthStarModal(metric.id, `${metric.symbol} ${metric.label}`));
                 grid.appendChild(card);
-                legendHtml += `<span class="flex items-center"><span class="font-bold text-lg mr-1">${metric.symbol}</span> = ${metric.label}</span>`;
             });
             
-            legend.innerHTML = legendHtml;
+            // Render legend
+            let legendHtml = '<span class="font-bold text-white mr-2">Legend:</span>';
+            strategyData.northStarMetrics.forEach(metric => {
+                legendHtml += `<span class="flex items-center"><span class="font-bold text-base mr-1">${metric.symbol}</span> = ${metric.label}</span>`;
+            });
+            if (legend) legend.innerHTML = legendHtml;
         }
 
         function renderPillars() {
-            const grid = document.getElementById('pillars-grid');
+            const grid = document.getElementById('pillars-inline');
             const feedbackEl = document.getElementById('pillar-filter-feedback');
-            const allPillars = { id: "all", name: "Show All" };
+            const allPillars = { id: "all", name: "Show All", description: "Show all objectives across all strategic pillars" };
 
             [allPillars, ...strategyData.strategicPillars].forEach(pillar => {
                 const button = document.createElement('button');
-                button.className = 'pillar-btn border-2 border-gray-600 text-gray-300 font-semibold py-2 px-4 rounded-full hover:bg-gray-800 hover:border-blue-500 hover:text-white transition-colors duration-300';
-                 if (pillar.id === 'all') {
+                button.className = 'pillar-btn border border-gray-600 text-gray-300 text-xs font-medium py-1 px-3 rounded-full hover:bg-gray-800 hover:border-blue-500 hover:text-white transition-colors duration-300';
+                if (pillar.id === 'all') {
                     button.classList.add('pillar-active');
                 }
                 button.textContent = pillar.name;
                 button.dataset.pillarId = pillar.id;
+                button.title = pillar.description;
                 button.addEventListener('click', () => {
                     document.querySelectorAll('.pillar-btn').forEach(btn => btn.classList.remove('pillar-active'));
                     button.classList.add('pillar-active');
@@ -840,7 +848,7 @@
                         feedbackEl.innerHTML = `Filtering by: <strong class="text-white">${pillar.name}</strong>`;
                         feedbackEl.style.display = 'block';
                     }
-                    applyAllFilters();
+                    applyGlobalPillarFilter(pillar.id);
                 });
                 grid.appendChild(button);
             });
@@ -850,28 +858,31 @@
             const filter = document.getElementById('area-filter');
             if (!filter) return;
 
-            let optionsHtml = `<option value="all">Filter by Area...</option>`;
+            let optionsHtml = `<option value="all">All Departments</option>`;
             strategyData.departments.forEach(dept => {
                 optionsHtml += `<option value="${dept.name}">${dept.name}</option>`;
             });
             filter.innerHTML = optionsHtml;
         }
 
-        function renderTabs() {
-            const tabsContainer = document.getElementById('tabs-container');
+        function renderSidebarTabs() {
+            const sidebar = document.getElementById('sidebar-tabs');
             const allDeptsTab = { name: "All Departments" };
+            
             [allDeptsTab, ...strategyData.departments].forEach((dept, index) => {
                 const tab = document.createElement('button');
-                tab.className = `text-sm font-medium py-3 px-2 sm:px-4 border-b-2 transition-colors duration-200 ${index === 0 ? 'tab-active' : 'border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-600'}`;
-                tab.textContent = dept.name;
+                tab.className = `sidebar-tab text-sm font-medium text-gray-300 hover:text-white ${index === 0 ? 'tab-active' : ''}`;
+                
+                if (dept.name === "All Departments") {
+                    tab.textContent = dept.name;
+                } else {
+                    const deptIcon = strategyData.departmentIcons[dept.name] || "";
+                    tab.innerHTML = `<span class="mr-2">${deptIcon}</span>${dept.name}`;
+                }
+                
                 tab.addEventListener('click', () => {
-                    document.querySelectorAll('#tabs-container button').forEach(t => t.classList.remove('tab-active'));
-                    document.querySelectorAll('#tabs-container button').forEach(t => {
-                        t.classList.remove('tab-active');
-                        t.classList.add('border-transparent', 'text-gray-400');
-                    });
+                    document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('tab-active'));
                     tab.classList.add('tab-active');
-                    tab.classList.remove('border-transparent', 'text-gray-400');
                     
                     if (dept.name === "All Departments") {
                         renderAllDepartments();
@@ -880,30 +891,34 @@
                     }
                     applyAllFilters();
                 });
-                tabsContainer.appendChild(tab);
+                sidebar.appendChild(tab);
             });
         }
         
         function renderAllDepartments() {
              const contentContainer = document.getElementById('tab-content');
-             let allHtml = '<div id="all-okrs-list" class="space-y-8">';
+             let allHtml = '<div id="all-okrs-list" class="space-y-6">';
 
              strategyData.departments.forEach(department => {
+                 const deptIcon = strategyData.departmentIcons[department.name] || "";
                  allHtml += `<div class="department-group" data-department-name="${department.name}">`;
-                 allHtml += `<h3 class="department-name text-2xl font-bold text-blue-400 mb-4 border-b border-gray-700 pb-2">${department.name}</h3>`;
-                 allHtml += `<div class="space-y-4">`;
+                 allHtml += `<h3 class="department-name text-xl font-bold text-blue-400 mb-3 border-b border-gray-700 pb-2 flex items-center gap-2">
+                     <span class="text-2xl">${deptIcon}</span>
+                     ${department.name}
+                 </h3>`;
+                 allHtml += `<div class="space-y-3">`;
 
                  department.objectives.forEach((obj, index) => {
                      const symbols = getNorthStarSymbols(obj.northStar);
                      const krsText = obj.keyResults.map(k => k.text.toLowerCase()).join(' ');
                      let krHtml = obj.keyResults.map((kr, krIndex) => `
-                         <li class="flex items-start space-x-4 py-3">
-                             <span class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500/20 text-blue-300 font-semibold text-xs flex items-center justify-center">KR${krIndex + 1}</span>
+                         <li class="flex items-start space-x-3 py-2">
+                             <span class="flex-shrink-0 h-5 w-5 rounded-full bg-blue-500/20 text-blue-300 font-semibold text-xs flex items-center justify-center">KR${krIndex + 1}</span>
                              <div class="flex-grow">
-                                 <p class="text-gray-300">${kr.text}</p>
+                                 <p class="text-sm text-gray-300">${kr.text}</p>
                              </div>
                              <div class="flex-shrink-0">
-                                 <select data-dept="${department.name}" data-obj-index="${index}" data-kr-index="${krIndex}" class="status-selector bg-gray-700 border border-gray-600 text-gray-200 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
+                                 <select data-dept="${department.name}" data-obj-index="${index}" data-kr-index="${krIndex}" class="status-selector bg-gray-700 border border-gray-600 text-gray-200 text-xs rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
                                      <option ${kr.status === 'Not Started' ? 'selected' : ''}>Not Started</option>
                                      <option ${kr.status === 'On Track' ? 'selected' : ''}>On Track</option>
                                      <option ${kr.status === 'At Risk' ? 'selected' : ''}>At Risk</option>
@@ -915,12 +930,12 @@
 
                      allHtml += `
                          <div class="okr-item border border-gray-700 rounded-lg overflow-hidden" data-pillar="${obj.pillar}" data-title="${obj.title.toLowerCase()}" data-krs="${krsText}">
-                              <button type="button" class="accordion-toggle w-full text-left p-4 bg-gray-800/50 hover:bg-gray-800 flex justify-between items-center">
-                                 <span class="font-semibold text-white">${index + 1}. ${obj.title} ${symbols}</span>
+                              <button type="button" class="accordion-toggle w-full text-left p-3 bg-gray-800/50 hover:bg-gray-800 flex justify-between items-center">
+                                 <span class="text-sm font-semibold text-white">${index + 1}. ${obj.title} ${symbols}</span>
                                  <svg class="accordion-icon w-4 h-4 transform transition-transform text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                              </button>
                              <div class="accordion-content">
-                                 <ul class="px-4 divide-y divide-gray-700">
+                                 <ul class="px-3 divide-y divide-gray-700">
                                     ${krHtml}
                                  </ul>
                              </div>
@@ -937,19 +952,21 @@
 
         function renderDepartment(deptName) {
             const department = strategyData.departments.find(d => d.name === deptName);
+            const deptIcon = strategyData.departmentIcons[deptName] || "";
             const contentContainer = document.getElementById('tab-content');
             
             contentContainer.innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div class="md:col-span-1 text-center md:text-left">
-                        <div class="chart-container">
-                            <canvas id="${deptName.replace(/\s+/g, '')}-chart"></canvas>
+                <div class="space-y-4">
+                    <div class="flex items-center mb-4 bg-gray-800/30 p-4 rounded-lg border border-gray-700" style="gap: 0;">
+                        <div class="flex-shrink-0 text-6xl" style="line-height: 1; margin-right: 10px;">
+                            ${deptIcon}
                         </div>
-                        <h3 class="text-xl font-bold text-white mt-4">${department.name}</h3>
-                        <p class="text-gray-400 mt-2">${department.goal}</p>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-white mb-1">${department.name}</h3>
+                            <p class="text-sm text-gray-400">${department.goal}</p>
+                        </div>
                     </div>
-                    <div id="okr-list-${deptName.replace(/\s+/g, '')}" class="md:col-span-3 space-y-4">
-                    </div>
+                    <div id="okr-list-${deptName.replace(/\s+/g, '')}" class="space-y-3"></div>
                 </div>
             `;
 
@@ -960,13 +977,13 @@
                 const krsText = obj.keyResults.map(k => k.text.toLowerCase()).join(' ');
                 
                 let krHtml = obj.keyResults.map((kr, krIndex) => `
-                    <li class="flex items-start space-x-4 py-3">
-                        <span class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-500/20 text-blue-300 font-semibold text-xs flex items-center justify-center">KR${krIndex + 1}</span>
+                    <li class="flex items-start space-x-3 py-2">
+                        <span class="flex-shrink-0 h-5 w-5 rounded-full bg-blue-500/20 text-blue-300 font-semibold text-xs flex items-center justify-center">KR${krIndex + 1}</span>
                         <div class="flex-grow">
-                            <p class="text-gray-300">${kr.text}</p>
+                            <p class="text-sm text-gray-300">${kr.text}</p>
                         </div>
                         <div class="flex-shrink-0">
-                            <select data-dept="${department.name}" data-obj-index="${index}" data-kr-index="${krIndex}" class="status-selector bg-gray-700 border border-gray-600 text-gray-200 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5">
+                            <select data-dept="${department.name}" data-obj-index="${index}" data-kr-index="${krIndex}" class="status-selector bg-gray-700 border border-gray-600 text-gray-200 text-xs rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
                                 <option ${kr.status === 'Not Started' ? 'selected' : ''}>Not Started</option>
                                 <option ${kr.status === 'On Track' ? 'selected' : ''}>On Track</option>
                                 <option ${kr.status === 'At Risk' ? 'selected' : ''}>At Risk</option>
@@ -978,12 +995,12 @@
 
                 const objectiveHTML = `
                     <div class="okr-item border border-gray-700 rounded-lg overflow-hidden" data-pillar="${obj.pillar}" data-title="${obj.title.toLowerCase()}" data-krs="${krsText}">
-                        <button type="button" class="accordion-toggle w-full text-left p-4 bg-gray-800/50 hover:bg-gray-800 flex justify-between items-center">
-                            <span class="font-semibold text-white">${index + 1}. ${obj.title} ${symbols}</span>
+                        <button type="button" class="accordion-toggle w-full text-left p-3 bg-gray-800/50 hover:bg-gray-800 flex justify-between items-center">
+                            <span class="text-sm font-semibold text-white">${index + 1}. ${obj.title} ${symbols}</span>
                             <svg class="accordion-icon w-4 h-4 transform transition-transform text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div class="accordion-content">
-                            <ul class="px-4 divide-y divide-gray-700">
+                            <ul class="px-3 divide-y divide-gray-700">
                                ${krHtml}
                             </ul>
                         </div>
@@ -993,7 +1010,6 @@
                 okrList.insertAdjacentHTML('beforeend', objectiveHTML);
             });
 
-            createDepartmentChart(department);
             setupDynamicEventListeners(contentContainer);
         }
         
@@ -1003,8 +1019,17 @@
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
             
+            // Get current pillar filter
+            const activePillarEl = document.querySelector('.pillar-btn.pillar-active');
+            const currentPillar = activePillarEl ? activePillarEl.dataset.pillarId : 'all';
+            
             const statusCounts = { "Not Started": 0, "On Track": 0, "At Risk": 0, "Completed": 0 };
-            department.objectives.forEach(obj => obj.keyResults.forEach(kr => statusCounts[kr.status]++));
+            department.objectives.forEach(obj => {
+                // Only count objectives that match the pillar filter
+                if (currentPillar === 'all' || obj.pillar === currentPillar) {
+                    obj.keyResults.forEach(kr => statusCounts[kr.status]++);
+                }
+            });
             
             if (charts[department.name]) {
                 charts[department.name].destroy();
@@ -1018,13 +1043,13 @@
                         data: Object.values(statusCounts),
                         backgroundColor: Object.values(STATUS_COLORS),
                         borderColor: '#111827',
-                        borderWidth: 3
+                        borderWidth: 2
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '70%',
+                    cutout: '65%',
                     plugins: { legend: { display: false }, tooltip: { enabled: true } }
                 }
             });
@@ -1033,14 +1058,11 @@
         function setupDynamicEventListeners(container) {
              if (!container) return;
              
-             // Remove all existing event listeners by cloning
              const newContainer = container.cloneNode(true);
              container.parentNode.replaceChild(newContainer, container);
              
-             // Get reference to the new container
              const freshContainer = document.getElementById('tab-content');
              
-             // Add accordion toggle listeners
              freshContainer.querySelectorAll('.accordion-toggle').forEach(toggle => {
                  toggle.addEventListener('click', function(e) {
                      e.preventDefault();
@@ -1057,7 +1079,6 @@
                  });
              });
              
-             // Add status selector listeners
              freshContainer.querySelectorAll('.status-selector').forEach(selector => {
                  selector.addEventListener('change', function() {
                      const { dept, objIndex, krIndex } = this.dataset;
@@ -1068,7 +1089,10 @@
                          if(charts[department.name]) {
                             createDepartmentChart(department);
                          }
-                         updateGlobalProgressTracker();
+                         // Get current pillar filter and update with it
+                         const activePillarEl = document.querySelector('.pillar-btn.pillar-active');
+                         const currentPillar = activePillarEl ? activePillarEl.dataset.pillarId : 'all';
+                         updateGlobalProgressTracker(currentPillar);
                      }
                  });
              });
@@ -1079,7 +1103,7 @@
             const selectedArea = document.getElementById('area-filter').value;
             const activePillarEl = document.querySelector('.pillar-btn.pillar-active');
             const selectedPillar = activePillarEl ? activePillarEl.dataset.pillarId : 'all';
-            const allDeptTabActive = document.querySelector('#tabs-container button.tab-active').textContent === 'All Departments';
+            const allDeptTabActive = document.querySelector('.sidebar-tab.tab-active').textContent === 'All Departments';
 
             if (allDeptTabActive) {
                 const departmentGroups = document.querySelectorAll('#all-okrs-list .department-group');
@@ -1121,27 +1145,75 @@
                 });
             }
         }
+        
+        function applyGlobalPillarFilter(pillarId) {
+            // Filter North Star Metrics
+            filterNorthStarMetrics(pillarId);
+            
+            // Update trackers with filtered data
+            updateGlobalProgressTracker(pillarId);
+            
+            // Apply filter to OKRs
+            applyAllFilters();
+        }
+        
+        function filterNorthStarMetrics(pillarId) {
+            const grid = document.getElementById('north-star-metrics-grid');
+            const cards = grid.querySelectorAll('.north-star-card');
+            
+            if (pillarId === 'all') {
+                cards.forEach(card => card.style.display = 'block');
+                return;
+            }
+            
+            // Find which North Star metrics are referenced by objectives with this pillar
+            const relevantMetrics = new Set();
+            strategyData.departments.forEach(dept => {
+                dept.objectives.forEach(obj => {
+                    if (obj.pillar === pillarId && obj.northStar) {
+                        obj.northStar.forEach(metricId => relevantMetrics.add(metricId));
+                    }
+                });
+            });
+            
+            cards.forEach(card => {
+                if (relevantMetrics.has(card.dataset.metricId)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
         function showNorthStarModal(metricId, metricLabel) {
             const modal = document.getElementById('north-star-modal');
             const title = document.getElementById('north-star-modal-title');
             const content = document.getElementById('north-star-modal-content');
             if (!modal || !title || !content) return;
+            
+            // Get current pillar filter
+            const activePillarEl = document.querySelector('.pillar-btn.pillar-active');
+            const currentPillar = activePillarEl ? activePillarEl.dataset.pillarId : 'all';
+            
             title.innerHTML = `Objectives aligned with: ${metricLabel}`;
             let contentHtml = '';
             strategyData.departments.forEach(dept => {
-                const matchingObjectives = dept.objectives.filter(obj => obj.northStar && obj.northStar.includes(metricId));
+                const matchingObjectives = dept.objectives.filter(obj => {
+                    const matchesMetric = obj.northStar && obj.northStar.includes(metricId);
+                    const matchesPillar = currentPillar === 'all' || obj.pillar === currentPillar;
+                    return matchesMetric && matchesPillar;
+                });
                 if (matchingObjectives.length > 0) {
-                    contentHtml += `<div class="mb-6">
-                        <h4 class="text-lg font-bold text-blue-400 border-b border-gray-600 pb-2 mb-3">${dept.name}</h4>
+                    contentHtml += `<div class="mb-4">
+                        <h4 class="text-base font-bold text-blue-400 border-b border-gray-600 pb-2 mb-2">${dept.name}</h4>
                         <ul class="space-y-2">${matchingObjectives.map(obj => `
-                            <li class="bg-gray-800/50 p-3 rounded-md">
-                                <p class="font-semibold text-white">${obj.title}</p>
+                            <li class="bg-gray-800/50 p-2 rounded-md">
+                                <p class="text-sm font-semibold text-white">${obj.title}</p>
                             </li>`).join('')}
                         </ul></div>`;
                 }
             });
-            content.innerHTML = contentHtml || '<p class="text-gray-400">No objectives are currently aligned with this North Star Metric.</p>';
+            content.innerHTML = contentHtml || '<p class="text-sm text-gray-400">No objectives are currently aligned with this North Star Metric.</p>';
             modal.classList.remove('hidden');
         }
     </script>
