@@ -7,429 +7,250 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            color: #e2e8f0;
-        }
-        .gradient-header {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        }
-        .table-container, .card, .stat-card {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-family: 'DM Sans', sans-serif;
+            background-color: #000000;
+            background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 50, 90, 0.6), transparent 100%);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
         table {
             border-collapse: separate;
             border-spacing: 0;
-            width: 100%;
         }
-        th, td {
-            border-bottom: 1px solid rgba(59, 130, 246, 0.15);
-            padding: 1rem;
-            text-align: left;
-        }
-        th {
-            background: rgba(30, 41, 59, 0.5);
-            font-weight: 600;
+        thead th {
             position: sticky;
             top: 0;
             z-index: 10;
         }
-        td {
-            vertical-align: top;
-        }
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-        tbody tr:hover {
-            background-color: rgba(30, 64, 175, 0.2);
-        }
-        .card {
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-        }
-        .metric-highlight {
-            color: #34d399; /* Emerald 400 */
-            font-weight: 700;
-        }
-        .year-data {
-            display: block;
-            margin-top: 0.25rem;
-        }
-        .stat-card {
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            border-top-width: 4px;
-            transition: all 0.3s ease-in-out;
-        }
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
     </style>
 </head>
-<body class="antialiased">
-    <div class="container mx-auto px-4 py-12 max-w-7xl">
+<body class="text-gray-300 antialiased">
 
-        <!-- Header -->
+    <header class="bg-black/90 backdrop-blur-sm sticky top-0 z-20 border-b border-gray-800">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-x-4">
+                    <a href="https://bpcs.com/" title="Blueprint Home">
+                        <img width="120" height="24" src="https://bpcs.com/wp-content/uploads/2021/02/BlueprintLogo_White_Tiles-400x81.png" alt="Blueprint Logo">
+                    </a>
+                    <span class="border-l border-gray-700 h-6"></span>
+                    <h2 class="text-base font-semibold text-gray-400 hidden sm:block">North Star Analysis</h2>
+                 </div>
+                <div class="flex items-center gap-x-6">
+                    <a href="index.html" class="border border-white/70 hover:border-white text-white text-sm font-semibold py-1.5 px-4 rounded-md transition-colors">
+                        Back to Strategic Plan
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container mx-auto px-4 py-12 max-w-7xl">
         <header class="text-center mb-16">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-                <span class="bg-clip-text text-transparent gradient-header">
-                    The Compass for Growth
-                </span>
+                The Compass for Growth
             </h1>
-            <p class="mt-4 text-lg text-slate-400 max-w-3xl mx-auto">
+            <p class="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">
                 Deconstructing North Star Metrics from four key archetypes to define the guiding compass for a modern consulting firm.
             </p>
         </header>
 
-        <!-- Archetype Sections -->
-        <main class="space-y-20">
+        <main class="space-y-16">
 
             <!-- Archetype 1: Professional Services -->
-            <section id="archetype-1">
+            <section id="archetype-1" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-bold text-white mb-2">Archetype 1: Professional Services "North Star Constellation"</h2>
-                <p class="text-slate-400 mb-6 max-w-4xl">The world's largest professional services firms utilize a balanced scorecard of high-level indicators rather than a single North Star Metric. This "constellation" approach tracks three core pillars: massive scale (revenue), immense talent (human capital), and clear strategic direction (future-proofing investments). Growth is measured by the steady, year-over-year expansion of all three pillars in concert.</p>
-                <div class="table-container rounded-lg overflow-hidden">
-                     <div class="overflow-x-auto">
-                        <table>
-                            <thead>
+                <p class="text-gray-400 mb-6 max-w-4xl">The world's largest professional services firms utilize a balanced scorecard of high-level indicators. This "constellation" approach tracks three core pillars: massive scale (revenue), immense talent (human capital), and clear strategic direction (future-proofing investments).</p>
+                <div class="rounded-lg overflow-hidden border border-gray-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-800/60">
                                 <tr>
-                                    <th class="text-white">Firm</th>
-                                    <th class="text-white">Pillar 1: Scale (Revenue)</th>
-                                    <th class="text-white">Pillar 2: Talent (Headcount)</th>
-                                    <th class="text-white">Pillar 3: Strategy (Future-Proofing)</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Firm</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Pillar 1: Scale (Revenue)</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Pillar 2: Talent (Headcount)</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Pillar 3: Strategy (Future-Proofing)</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-slate-300">
-                                <tr>
-                                    <td class="font-semibold text-white">Accenture</td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">$64.9B</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> $61.6B</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> $50.5B</span>
-                                    </td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">733,000</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> 721,000</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> 674,000</span>
-                                    </td>
-                                    <td><span class="metric-highlight">$3B</span> investment in Data & AI over 3 years; goal of doubling AI talent to 80,000.</td>
+                            <tbody class="text-gray-300">
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Accenture</td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">$64.9B</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> $61.6B</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> $50.5B</span></td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">733,000</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> 721,000</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> 674,000</span></td>
+                                    <td class="p-4 text-sm align-top"><span class="text-emerald-400 font-bold">$3B</span> investment in Data & AI over 3 years; goal of doubling AI talent to 80,000.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Deloitte</td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">$67.2B</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> $59.3B</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> $50.2B</span>
-                                    </td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">460,000</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> 415,000</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> 345,000</span>
-                                    </td>
-                                    <td>Major investments in a dedicated AI practice, Sustainability & Climate services, and expanding tech alliances.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Deloitte</td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">$67.2B</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> $59.3B</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> $50.2B</span></td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">460,000</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> 415,000</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> 345,000</span></td>
+                                    <td class="p-4 text-sm align-top">Major investments in a dedicated AI practice, Sustainability & Climate services, and expanding tech alliances.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">PwC</td>
-                                     <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">$55.4B</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> $50.3B</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> $45.1B</span>
-                                    </td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">370,000</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> 328,000</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> 295,000</span>
-                                    </td>
-                                    <td><span class="metric-highlight">$1.5B</span> investment in proprietary AI tools like "ChatPwC" as part of their "The New Equation" global strategy.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">PwC</td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">$55.4B</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> $50.3B</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> $45.1B</span></td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">370,000</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> 328,000</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> 295,000</span></td>
+                                    <td class="p-4 text-sm align-top"><span class="text-emerald-400 font-bold">$1.5B</span> investment in proprietary AI tools like "ChatPwC" as part of their "The New Equation" global strategy.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">EY</td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">$51.2B</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> $45.4B</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> $40.0B</span>
-                                    </td>
-                                    <td>
-                                        <span class="year-data"><span class="font-semibold text-white">FY24:</span> <span class="metric-highlight">~393,000</span></span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY23:</span> ~365,000</span>
-                                        <span class="year-data"><span class="font-semibold text-white">FY22:</span> ~312,000</span>
-                                    </td>
-                                    <td>Launched <span class="metric-highlight">"EY.ai,"</span> a unifying platform backed by a $1.4B investment to integrate AI into all service lines.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">EY</td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">$51.2B</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> $45.4B</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> $40.0B</span></td>
+                                    <td class="p-4"><span class="block text-sm"><span class="font-semibold text-white">FY24:</span> <span class="text-emerald-400 font-bold">~393,000</span></span> <span class="block text-sm"><span class="font-semibold text-white">FY23:</span> ~365,000</span> <span class="block text-sm"><span class="font-semibold text-white">FY22:</span> ~312,000</span></td>
+                                    <td class="p-4 text-sm align-top">Launched <span class="text-emerald-400 font-bold">"EY.ai,"</span> a unifying platform backed by a $1.4B investment to integrate AI into all service lines.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Accenture Stat Card -->
-                    <div class="stat-card border-blue-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Accenture</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Revenue</p>
-                                <p class="text-3xl font-bold text-white mt-1">💰 $64.9B</p>
-                                <p class="text-lg font-semibold text-green-400">+5.36% YoY</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Headcount</p>
-                                <p class="text-3xl font-bold text-white mt-1">👥 733k</p>
-                                <p class="text-lg font-semibold text-green-400">+1.66% YoY</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Strategic Goal</p>
-                                <p class="text-3xl font-bold text-white mt-1">🎯 $3B</p>
-                                <p class="text-lg font-semibold text-cyan-400">AI Investment</p>
-                            </div>
-                        </div>
+                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Accenture</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Revenue</p><p class="text-3xl font-bold text-white mt-1">💰 $64.9B</p><p class="text-lg font-semibold text-green-400">+5.36% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Headcount</p><p class="text-3xl font-bold text-white mt-1">👥 733k</p><p class="text-lg font-semibold text-green-400">+1.66% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Strategic Goal</p><p class="text-3xl font-bold text-white mt-1">🎯 $3B</p><p class="text-lg font-semibold text-cyan-400">AI Investment</p></div></div>
                     </div>
-                    <!-- Deloitte Stat Card -->
-                    <div class="stat-card border-purple-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Deloitte</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Revenue</p>
-                                <p class="text-3xl font-bold text-white mt-1">💰 $67.2B</p>
-                                <p class="text-lg font-semibold text-green-400">+13.32% YoY</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Headcount</p>
-                                <p class="text-3xl font-bold text-white mt-1">👥 460k</p>
-                                <p class="text-lg font-semibold text-green-400">+10.84% YoY</p>
-                            </div>
-                             <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Strategic Goal</p>
-                                <p class="text-3xl font-bold text-white mt-1">🎯 Key Focus</p>
-                                <p class="text-lg font-semibold text-cyan-400">AI & Climate</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Deloitte</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Revenue</p><p class="text-3xl font-bold text-white mt-1">💰 $67.2B</p><p class="text-lg font-semibold text-green-400">+13.32% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Headcount</p><p class="text-3xl font-bold text-white mt-1">👥 460k</p><p class="text-lg font-semibold text-green-400">+10.84% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Strategic Goal</p><p class="text-3xl font-bold text-white mt-1">🎯 Key Focus</p><p class="text-lg font-semibold text-cyan-400">AI & Climate</p></div></div>
                     </div>
-                    <!-- PwC Stat Card -->
-                    <div class="stat-card border-emerald-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">PwC</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Revenue</p>
-                                <p class="text-3xl font-bold text-white mt-1">💰 $55.4B</p>
-                                <p class="text-lg font-semibold text-green-400">+10.14% YoY</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Headcount</p>
-                                <p class="text-3xl font-bold text-white mt-1">👥 370k</p>
-                                <p class="text-lg font-semibold text-green-400">+12.80% YoY</p>
-                            </div>
-                             <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Strategic Goal</p>
-                                <p class="text-3xl font-bold text-white mt-1">🎯 $1.5B</p>
-                                <p class="text-lg font-semibold text-cyan-400">AI Investment</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">PwC</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Revenue</p><p class="text-3xl font-bold text-white mt-1">💰 $55.4B</p><p class="text-lg font-semibold text-green-400">+10.14% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Headcount</p><p class="text-3xl font-bold text-white mt-1">👥 370k</p><p class="text-lg font-semibold text-green-400">+12.80% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Strategic Goal</p><p class="text-3xl font-bold text-white mt-1">🎯 $1.5B</p><p class="text-lg font-semibold text-cyan-400">AI Investment</p></div></div>
                     </div>
-                    <!-- EY Stat Card -->
-                    <div class="stat-card border-amber-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">EY</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Revenue</p>
-                                <p class="text-3xl font-bold text-white mt-1">💰 $51.2B</p>
-                                <p class="text-lg font-semibold text-green-400">+12.78% YoY</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">FY24 Headcount</p>
-                                <p class="text-3xl font-bold text-white mt-1">👥 393k</p>
-                                <p class="text-lg font-semibold text-green-400">+7.67% YoY</p>
-                            </div>
-                             <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Strategic Goal</p>
-                                <p class="text-3xl font-bold text-white mt-1">🎯 $1.4B</p>
-                                <p class="text-lg font-semibold text-cyan-400">AI Platform</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">EY</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Revenue</p><p class="text-3xl font-bold text-white mt-1">💰 $51.2B</p><p class="text-lg font-semibold text-green-400">+12.78% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">FY24 Headcount</p><p class="text-3xl font-bold text-white mt-1">👥 393k</p><p class="text-lg font-semibold text-green-400">+7.67% YoY</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Strategic Goal</p><p class="text-3xl font-bold text-white mt-1">🎯 $1.4B</p><p class="text-lg font-semibold text-cyan-400">AI Platform</p></div></div>
                     </div>
                 </div>
             </section>
 
             <!-- Archetype 2: Outcome-Led -->
-            <section id="archetype-2">
+            <section id="archetype-2" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-bold text-white mb-2">Archetype 2: Outcome-Led Value Proposition</h2>
-                <p class="text-slate-400 mb-6 max-w-4xl">Elite technology partners, especially in high-growth ecosystems like Databricks, define their success through the specific, quantifiable return on investment they deliver to clients. Their North Star is not an internal metric, but the provable business outcome they generate. This is the core of their marketing and value proposition, turning client success into a powerful tool for acquiring new business.</p>
-                <div class="table-container rounded-lg overflow-hidden">
+                <p class="text-gray-400 mb-6 max-w-4xl">Elite technology partners define their success through the specific, quantifiable return on investment they deliver to clients. Their North Star is not an internal metric, but the provable business outcome they generate.</p>
+                <div class="rounded-lg overflow-hidden border border-gray-700">
                      <div class="overflow-x-auto">
-                        <table>
-                            <thead>
+                        <table class="w-full">
+                            <thead class="bg-gray-800/60">
                                 <tr>
-                                    <th class="text-white">Firm</th>
-                                    <th class="text-white">Client/Industry Focus</th>
-                                    <th class="text-white">Specific Solution/Offering</th>
-                                    <th class="text-white">Quantifiable Client Outcome (Metric)</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Firm</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Client/Industry Focus</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Specific Solution/Offering</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Quantifiable Client Outcome (Metric)</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-slate-300">
-                                <tr>
-                                    <td class="font-semibold text-white">Lovelytics</td>
-                                    <td>Consumer Packaged Goods (CPG)</td>
-                                    <td>Dashboard Performance Tuning</td>
-                                    <td>Delivered <span class="metric-highlight">$880,000</span> in annual savings & <span class="metric-highlight">5x faster</span> dashboards.</td>
+                            <tbody class="text-gray-300">
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Lovelytics</td>
+                                    <td class="p-4 align-top">Consumer Packaged Goods (CPG)</td>
+                                    <td class="p-4 align-top">Dashboard Performance Tuning</td>
+                                    <td class="p-4 text-sm align-top">Delivered <span class="text-emerald-400 font-bold">$880,000</span> in annual savings & <span class="text-emerald-400 font-bold">5x faster</span> dashboards.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Celebal Technologies</td>
-                                    <td>Banking & Financial Services</td>
-                                    <td>Customer 360 & Personalization Engine</td>
-                                    <td>Promises a <span class="metric-highlight">6–8% boost</span> in conversion rates and <span class="metric-highlight">60% reduction</span> in campaign turnaround time.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Celebal Technologies</td>
+                                    <td class="p-4 align-top">Banking & Financial Services</td>
+                                    <td class="p-4 align-top">Customer 360 & Personalization Engine</td>
+                                    <td class="p-4 text-sm align-top">Promises a <span class="text-emerald-400 font-bold">6–8% boost</span> in conversion rates and <span class="text-emerald-400 font-bold">60% reduction</span> in campaign turnaround time.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Accenture</td>
-                                    <td>Cross-Industry (ML/AI)</td>
-                                    <td>Optimized ML Model Training Solution</td>
-                                    <td>Promises up to <span class="metric-highlight">14x faster</span> machine learning model training on Databricks.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Accenture</td>
+                                    <td class="p-4 align-top">Cross-Industry (ML/AI)</td>
+                                    <td class="p-4 align-top">Optimized ML Model Training Solution</td>
+                                    <td class="p-4 text-sm align-top">Promises up to <span class="text-emerald-400 font-bold">14x faster</span> machine learning model training on Databricks.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Capgemini</td>
-                                    <td>Cross-Industry (GenAI)</td>
-                                    <td>"RAISE for GenAI" Accelerator</td>
-                                    <td>Can <span class="metric-highlight">reduce run costs by up to 80%</span> and <span class="metric-highlight">accelerate delivery by up to 60%</span>.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Capgemini</td>
+                                    <td class="p-4 align-top">Cross-Industry (GenAI)</td>
+                                    <td class="p-4 align-top">"RAISE for GenAI" Accelerator</td>
+                                    <td class="p-4 text-sm align-top">Can <span class="text-emerald-400 font-bold">reduce run costs by up to 80%</span> and <span class="text-emerald-400 font-bold">accelerate delivery by up to 60%</span>.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Lovelytics Stat Card -->
-                    <div class="stat-card border-pink-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Lovelytics</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Annual Savings</p>
-                                <p class="text-3xl font-bold text-white mt-1">💸 $880k</p>
-                                <p class="text-lg font-semibold text-green-400">Client Cost Reduction</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Performance Gain</p>
-                                <p class="text-3xl font-bold text-white mt-1">🚀 5x</p>
-                                <p class="text-lg font-semibold text-green-400">Faster Dashboards</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Lovelytics</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Annual Savings</p><p class="text-3xl font-bold text-white mt-1">💸 $880k</p><p class="text-lg font-semibold text-green-400">Client Cost Reduction</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Performance Gain</p><p class="text-3xl font-bold text-white mt-1">🚀 5x</p><p class="text-lg font-semibold text-green-400">Faster Dashboards</p></div></div>
                     </div>
-                    <!-- Celebal Tech. Stat Card -->
-                    <div class="stat-card border-teal-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Celebal Tech.</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Conversion Boost</p>
-                                <p class="text-3xl font-bold text-white mt-1">📈 6-8%</p>
-                                <p class="text-lg font-semibold text-green-400">Increased Sales</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Efficiency Gain</p>
-                                <p class="text-3xl font-bold text-white mt-1">⏱️ -60%</p>
-                                <p class="text-lg font-semibold text-green-400">Turnaround Time</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Celebal Tech.</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Conversion Boost</p><p class="text-3xl font-bold text-white mt-1">📈 6-8%</p><p class="text-lg font-semibold text-green-400">Increased Sales</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Efficiency Gain</p><p class="text-3xl font-bold text-white mt-1">⏱️ -60%</p><p class="text-lg font-semibold text-green-400">Turnaround Time</p></div></div>
                     </div>
-                    <!-- Accenture Stat Card -->
-                    <div class="stat-card border-indigo-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Accenture</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Innovation Speed</p>
-                                <p class="text-3xl font-bold text-white mt-1">⚡ 14x</p>
-                                <p class="text-lg font-semibold text-green-400">Faster ML Training</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Value Prop</p>
-                                <p class="text-3xl font-bold text-white mt-1">🎯 Outcome</p>
-                                <p class="text-lg font-semibold text-cyan-400">Speed to Market</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Accenture</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Innovation Speed</p><p class="text-3xl font-bold text-white mt-1">⚡ 14x</p><p class="text-lg font-semibold text-green-400">Faster ML Training</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Value Prop</p><p class="text-3xl font-bold text-white mt-1">🎯 Outcome</p><p class="text-lg font-semibold text-cyan-400">Speed to Market</p></div></div>
                     </div>
-                    <!-- Capgemini Stat Card -->
-                    <div class="stat-card border-orange-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Capgemini</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Cost Reduction</p>
-                                <p class="text-3xl font-bold text-white mt-1">💸 -80%</p>
-                                <p class="text-lg font-semibold text-green-400">GenAI Run Costs</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Delivery Speed</p>
-                                <p class="text-3xl font-bold text-white mt-1">🚀 -60%</p>
-                                <p class="text-lg font-semibold text-green-400">Time to Value</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Capgemini</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Cost Reduction</p><p class="text-3xl font-bold text-white mt-1">💸 -80%</p><p class="text-lg font-semibold text-green-400">GenAI Run Costs</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Delivery Speed</p><p class="text-3xl font-bold text-white mt-1">🚀 -60%</p><p class="text-lg font-semibold text-green-400">Time to Value</p></div></div>
                     </div>
                 </div>
             </section>
 
             <!-- Archetype 3: Product-Led Flywheel -->
-            <section id="archetype-3">
+            <section id="archetype-3" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-bold text-white mb-2">Archetype 3: Product-Led Flywheel</h2>
-                <p class="text-slate-400 mb-6 max-w-4xl">Scaled technology leaders are famous for their focus on a single, elegant North Star Metric. This NSM is a direct proxy for user engagement and the realization of value within their platform. As these companies mature, their NSM often evolves from a simple measure of growth (like monthly users) to a more sophisticated metric reflecting deep, habitual use (like daily users or collaborative team activity). This is supported by a constellation of secondary metrics.</p>
-                <div class="table-container rounded-lg overflow-hidden">
-                     <div class="overflow-x-auto">
-                        <table>
-                            <thead>
+                <p class="text-gray-400 mb-6 max-w-4xl">Scaled technology leaders are famous for their focus on a single, elegant North Star Metric. This NSM is a direct proxy for user engagement and the realization of value within their platform, often evolving from growth to deep, habitual use.</p>
+                <div class="rounded-lg overflow-hidden border border-gray-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-800/60">
                                 <tr>
-                                    <th class="text-white">Company</th>
-                                    <th class="text-white">Primary North Star Metric (NSM)</th>
-                                    <th class="text-white">Key Supporting Metrics</th>
-                                    <th class="text-white">NSM Evolution</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Company</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Primary North Star Metric (NSM)</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Key Supporting Metrics</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">NSM Evolution</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-slate-300">
-                                <tr>
-                                    <td class="font-semibold text-white">Netflix</td>
-                                    <td class="font-semibold text-amber-400">Total Hours Watched</td>
-                                    <td>Subscriber Growth, Churn Rate, Content Engagement Rate (% of users who finish a series).</td>
-                                    <td>Evolved from "Paid Subscriptions" to better reflect engagement and predict retention.</td>
+                            <tbody class="text-gray-300">
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Netflix</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Total Hours Watched</td>
+                                    <td class="p-4 text-sm align-top">Subscriber Growth, Churn Rate, Content Engagement Rate (% of users who finish a series).</td>
+                                    <td class="p-4 text-sm align-top">Evolved from "Paid Subscriptions" to better reflect engagement and predict retention.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Facebook</td>
-                                    <td class="font-semibold text-amber-400">Daily Active Users (DAU)</td>
-                                    <td>Time Spent Per User, Ad Impressions, Monthly Active Users (MAU).</td>
-                                    <td>Shifted from MAU to DAU to measure stickiness and form a daily habit.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Facebook</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Daily Active Users (DAU)</td>
+                                    <td class="p-4 text-sm align-top">Time Spent Per User, Ad Impressions, Monthly Active Users (MAU).</td>
+                                    <td class="p-4 text-sm align-top">Shifted from MAU to DAU to measure stickiness and form a daily habit.</td>
                                 </tr>
-                                 <tr>
-                                    <td class="font-semibold text-white">Airbnb</td>
-                                    <td class="font-semibold text-amber-400">Nights Booked</td>
-                                    <td>Gross Booking Value (GBV), New Host Growth, Guest Repeat Booking Rate.</td>
-                                    <td>Has remained a consistent, powerful proxy for the health of their two-sided marketplace.</td>
+                                 <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Airbnb</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Nights Booked</td>
+                                    <td class="p-4 text-sm align-top">Gross Booking Value (GBV), New Host Growth, Guest Repeat Booking Rate.</td>
+                                    <td class="p-4 text-sm align-top">Has remained a consistent, powerful proxy for the health of their two-sided marketplace.</td>
                                 </tr>
-                                 <tr>
-                                    <td class="font-semibold text-white">Uber</td>
-                                    <td class="font-semibold text-amber-400">Trips Completed</td>
-                                    <td>Gross Bookings, Driver & Rider Growth Rates, Average Trip Fare.</td>
-                                    <td>The core unit of value exchange, measuring activity on both sides of the marketplace.</td>
+                                 <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Uber</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Trips Completed</td>
+                                    <td class="p-4 text-sm align-top">Gross Bookings, Driver & Rider Growth Rates, Average Trip Fare.</td>
+                                    <td class="p-4 text-sm align-top">The core unit of value exchange, measuring activity on both sides of the marketplace.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Salesforce</td>
-                                    <td class="font-semibold text-amber-400">Average Records Created per Account</td>
-                                    <td>Customer Retention Rate, Number of API Calls, Multi-Cloud Adoption Rate.</td>
-                                    <td>Shifted from "Active Contacts" to better reflect deep platform integration and data gravity.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Salesforce</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Average Records Created per Account</td>
+                                    <td class="p-4 text-sm align-top">Customer Retention Rate, Number of API Calls, Multi-Cloud Adoption Rate.</td>
+                                    <td class="p-4 text-sm align-top">Shifted from "Active Contacts" to better reflect deep platform integration and data gravity.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Shopify</td>
-                                    <td class="font-semibold text-amber-400">Gross Merchandise Value (GMV)</td>
-                                    <td>New Merchant Growth, Attach Rate for services (e.g., Shopify Payments), Avg. Revenue Per Merchant.</td>
-                                    <td>Meaning evolved from a startup metric to a broad ecosystem health indicator.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Shopify</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Gross Merchandise Value (GMV)</td>
+                                    <td class="p-4 text-sm align-top">New Merchant Growth, Attach Rate for services (e.g., Shopify Payments), Avg. Revenue Per Merchant.</td>
+                                    <td class="p-4 text-sm align-top">Meaning evolved from a startup metric to a broad ecosystem health indicator.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">HubSpot</td>
-                                    <td class="font-semibold text-amber-400">Number of Weekly Active Teams</td>
-                                    <td>Weekly Active Users, Multi-product adoption, Customer Retention.</td>
-                                    <td>Evolved from "Weekly Active Users" to emphasize collaborative, multi-product usage.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">HubSpot</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">Number of Weekly Active Teams</td>
+                                    <td class="p-4 text-sm align-top">Weekly Active Users, Multi-product adoption, Customer Retention.</td>
+                                    <td class="p-4 text-sm align-top">Evolved from "Weekly Active Users" to emphasize collaborative, multi-product usage.</td>
                                 </tr>
-                                 <tr>
-                                    <td class="font-semibold text-white">Atlassian</td>
-                                    <td class="font-semibold text-amber-400">AI Monthly Active Users (AI MAU)</td>
-                                    <td>General MAU, Conversion from free to paid, Marketplace App Installs.</td>
-                                    <td>Recent shift from general MAU to focus on adoption of new, high-value AI features.</td>
+                                 <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Atlassian</td>
+                                    <td class="p-4 font-semibold text-amber-400 align-top">AI Monthly Active Users (AI MAU)</td>
+                                    <td class="p-4 text-sm align-top">General MAU, Conversion from free to paid, Marketplace App Installs.</td>
+                                    <td class="p-4 text-sm align-top">Recent shift from general MAU to focus on adoption of new, high-value AI features.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -438,179 +259,119 @@
             </section>
             
             <!-- Archetype 4: IPO Growth Story -->
-            <section id="archetype-4">
+            <section id="archetype-4" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
                 <h2 class="text-2xl font-bold text-white mb-2">Archetype 4: IPO Growth Story Imperative</h2>
-                <p class="text-slate-400 mb-6 max-w-4xl">The S-1 filings of highly successful IPOs reveal the critical metrics needed to convince investors of a healthy, scalable, and efficient business model. For modern SaaS and platform companies, the single most important metric is Net Revenue Retention (or its equivalent, Dollar-Based Net Expansion). A rate over 120% is considered elite, proving the company can grow sustainably just from its existing customer base.</p>
-                <div class="table-container rounded-lg overflow-hidden">
-                     <div class="overflow-x-auto">
-                        <table>
-                            <thead>
+                <p class="text-gray-400 mb-6 max-w-4xl">The S-1 filings of highly successful IPOs reveal the critical metrics needed to convince investors of a healthy, scalable business model. For modern SaaS companies, the single most important metric is Net Revenue Retention. A rate over 120% is considered elite.</p>
+                 <div class="rounded-lg overflow-hidden border border-gray-700">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-800/60">
                                 <tr>
-                                    <th class="text-white">Company (IPO Year)</th>
-                                    <th class="text-white">Primary Metric at IPO</th>
-                                    <th class="text-white">Post-IPO Performance & Durability</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Company (IPO Year)</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Primary Metric at IPO</th>
+                                    <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Post-IPO Performance & Durability</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-slate-300">
-                                <tr>
-                                    <td class="font-semibold text-white">Snowflake (2020)</td>
-                                    <td><span class="metric-highlight">158%</span> Net Revenue Retention Rate</td>
-                                    <td>Maintained exceptional rates, posting <span class="font-semibold">178% in FY21 and 171% in FY22</span>, proving immense value capture.</td>
+                            <tbody class="text-gray-300">
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Snowflake (2020)</td>
+                                    <td class="p-4 align-top"><span class="text-emerald-400 font-bold">158%</span> Net Revenue Retention Rate</td>
+                                    <td class="p-4 text-sm align-top">Maintained exceptional rates, posting <span class="font-semibold">178% in FY21 and 171% in FY22</span>, proving immense value capture.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Shopify (2015)</td>
-                                    <td>Number of Merchants & <span class="metric-highlight">10x GMV growth</span> in 2 years</td>
-                                    <td>GMV grew from <span class="font-semibold">$7.7B in 2015 to over $175B in 2021</span>, validating the ecosystem model.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Shopify (2015)</td>
+                                    <td class="p-4 align-top">Number of Merchants & <span class="text-emerald-400 font-bold">10x GMV growth</span> in 2 years</td>
+                                    <td class="p-4 text-sm align-top">GMV grew from <span class="font-semibold">$7.7B in 2015 to over $175B in 2021</span>, validating the ecosystem model.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Twilio (2016)</td>
-                                    <td><span class="metric-highlight">170%</span> Dollar-Based Net Expansion</td>
-                                    <td>Consistently stayed above <span class="font-semibold">125% for five years post-IPO</span>, demonstrating platform stickiness and developer-led growth.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Twilio (2016)</td>
+                                    <td class="p-4 align-top"><span class="text-emerald-400 font-bold">170%</span> Dollar-Based Net Expansion</td>
+                                    <td class="p-4 text-sm align-top">Consistently stayed above <span class="font-semibold">125% for five years post-IPO</span>, demonstrating platform stickiness and developer-led growth.</td>
                                 </tr>
-                                <tr>
-                                    <td class="font-semibold text-white">Okta (2017)</td>
-                                    <td><span class="metric-highlight">120%</span> Dollar-Based Retention Rate</td>
-                                    <td>Maintained a strong rate, typically between <span class="font-semibold">115%-123% annually</span> post-IPO, showing enterprise resilience.</td>
+                                <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Okta (2017)</td>
+                                    <td class="p-4 align-top"><span class="text-emerald-400 font-bold">120%</span> Dollar-Based Retention Rate</td>
+                                    <td class="p-4 text-sm align-top">Maintained a strong rate, typically between <span class="font-semibold">115%-123% annually</span> post-IPO, showing enterprise resilience.</td>
                                 </tr>
-                                 <tr>
-                                    <td class="font-semibold text-white">Uber (2019)</td>
-                                    <td>Gross Bookings & Monthly Active Platform Consumers (MAPCs)</td>
-                                    <td>MAPCs grew from <span class="font-semibold">2M in 2015 to 91M at IPO</span>. Gross Bookings hit <span class="font-semibold">~$50B in 2018</span>.</td>
+                                 <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                    <td class="p-4 font-semibold text-white align-top">Uber (2019)</td>
+                                    <td class="p-4 align-top">Gross Bookings & Monthly Active Platform Consumers (MAPCs)</td>
+                                    <td class="p-4 text-sm align-top">MAPCs grew from <span class="font-semibold">2M in 2015 to 91M at IPO</span>. Gross Bookings hit <span class="font-semibold">~$50B in 2018</span>.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                    <!-- Snowflake Stat Card -->
-                    <div class="stat-card border-cyan-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Snowflake</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">NRR at IPO</p>
-                                <p class="text-3xl font-bold text-white mt-1">📈 158%</p>
-                                <p class="text-lg font-semibold text-green-400">Elite Signal</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Post-IPO NRR</p>
-                                <p class="text-3xl font-bold text-white mt-1">💪 171%</p>
-                                <p class="text-lg font-semibold text-green-400">Durability (FY22)</p>
-                            </div>
-                        </div>
+                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Snowflake</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">NRR at IPO</p><p class="text-3xl font-bold text-white mt-1">📈 158%</p><p class="text-lg font-semibold text-green-400">Elite Signal</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Post-IPO NRR</p><p class="text-3xl font-bold text-white mt-1">💪 171%</p><p class="text-lg font-semibold text-green-400">Durability (FY22)</p></div></div>
                     </div>
-                    <!-- Shopify Stat Card -->
-                    <div class="stat-card border-green-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Shopify</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">GMV Growth</p>
-                                <p class="text-3xl font-bold text-white mt-1">🚀 10x</p>
-                                <p class="text-lg font-semibold text-green-400">2 Yrs Pre-IPO</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Post-IPO GMV</p>
-                                <p class="text-3xl font-bold text-white mt-1">💰 $175B+</p>
-                                <p class="text-lg font-semibold text-green-400">Ecosystem (2021)</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Shopify</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">GMV Growth</p><p class="text-3xl font-bold text-white mt-1">🚀 10x</p><p class="text-lg font-semibold text-green-400">2 Yrs Pre-IPO</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Post-IPO GMV</p><p class="text-3xl font-bold text-white mt-1">💰 $175B+</p><p class="text-lg font-semibold text-green-400">Ecosystem (2021)</p></div></div>
                     </div>
-                    <!-- Twilio Stat Card -->
-                    <div class="stat-card border-red-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Twilio</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">DBNE at IPO</p>
-                                <p class="text-3xl font-bold text-white mt-1">📈 170%</p>
-                                <p class="text-lg font-semibold text-green-400">Hyper-Expansion</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Post-IPO DBNE</p>
-                                <p class="text-3xl font-bold text-white mt-1">💪 >125%</p>
-                                <p class="text-lg font-semibold text-green-400">For 5 Years</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Twilio</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">DBNE at IPO</p><p class="text-3xl font-bold text-white mt-1">📈 170%</p><p class="text-lg font-semibold text-green-400">Hyper-Expansion</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Post-IPO DBNE</p><p class="text-3xl font-bold text-white mt-1">💪 >125%</p><p class="text-lg font-semibold text-green-400">For 5 Years</p></div></div>
                     </div>
-                    <!-- Okta Stat Card -->
-                    <div class="stat-card border-blue-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Okta</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">DBRR at IPO</p>
-                                <p class="text-3xl font-bold text-white mt-1">📈 120%</p>
-                                <p class="text-lg font-semibold text-green-400">Strong Enterprise</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Post-IPO DBRR</p>
-                                <p class="text-3xl font-bold text-white mt-1">💪 ~120%</p>
-                                <p class="text-lg font-semibold text-green-400">Consistent Annually</p>
-                            </div>
-                        </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Okta</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">DBRR at IPO</p><p class="text-3xl font-bold text-white mt-1">📈 120%</p><p class="text-lg font-semibold text-green-400">Strong Enterprise</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Post-IPO DBRR</p><p class="text-3xl font-bold text-white mt-1">💪 ~120%</p><p class="text-lg font-semibold text-green-400">Consistent Annually</p></div></div>
                     </div>
-                    <!-- Uber Stat Card -->
-                     <div class="stat-card border-gray-500">
-                        <h3 class="text-lg font-bold text-white mb-4 text-center">Uber</h3>
-                        <div class="space-y-5">
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">MAPCs at IPO</p>
-                                <p class="text-3xl font-bold text-white mt-1">👥 91M</p>
-                                <p class="text-lg font-semibold text-green-400">User Scale</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-sm text-slate-400 uppercase tracking-wider">Bookings Pre-IPO</p>
-                                <p class="text-3xl font-bold text-white mt-1">💰 ~$50B</p>
-                                <p class="text-lg font-semibold text-green-400">Marketplace (2018)</p>
-                            </div>
-                        </div>
+                     <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-center">
+                        <h3 class="text-lg font-bold text-white mb-4">Uber</h3>
+                        <div class="space-y-5"><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">MAPCs at IPO</p><p class="text-3xl font-bold text-white mt-1">👥 91M</p><p class="text-lg font-semibold text-green-400">User Scale</p></div><div class="text-center"><p class="text-sm text-gray-400 uppercase tracking-wider">Bookings Pre-IPO</p><p class="text-3xl font-bold text-white mt-1">💰 ~$50B</p><p class="text-lg font-semibold text-green-400">Marketplace (2018)</p></div></div>
                     </div>
                 </div>
             </section>
             
-             <!-- Blueprint Hybrid Scorecard -->
-            <section id="blueprint-hybrid">
-                <div class="card text-center">
+            <!-- Blueprint Hybrid Scorecard -->
+            <section id="blueprint-hybrid" class="bg-gray-900/50 border border-gray-700 p-6 rounded-xl shadow-lg">
+                <div class="text-center">
                     <h2 class="text-3xl font-bold text-white mb-4">The Blueprint Hybrid North Star Metric</h2>
-                    <p class="text-xl font-semibold bg-clip-text text-transparent gradient-header mb-4">
+                    <p class="text-xl font-semibold text-blue-400 mb-4">
                         "Annual Recurring/Retained Revenue from Strategically Aligned Clients"
                     </p>
-                    <p class="text-slate-400 max-w-4xl mx-auto mb-8">
-                        This hybrid NSM combines the strengths of all four archetypes. It focuses on the financial health of an IPO-ready company (Net Revenue Retention), the strategic positioning of a major service firm (alignment), the value delivery of an outcome-led partner (client retention), and the engagement of a product-led model (recurring value). It is decomposed into a set of input metrics that different teams can own and influence.
+                    <p class="text-gray-400 max-w-4xl mx-auto mb-8">
+                        This hybrid NSM combines the strengths of all four archetypes. It focuses on the financial health of an IPO-ready company (Net Revenue Retention), the strategic positioning of a major service firm (alignment), the value delivery of an outcome-led partner (client retention), and the engagement of a product-led model (recurring value).
                     </p>
                     <h3 class="text-xl font-bold text-white mb-6">Decomposed Input Metrics by Team</h3>
-                     <div class="table-container rounded-lg overflow-hidden">
+                     <div class="rounded-lg overflow-hidden border border-gray-700">
                          <div class="overflow-x-auto">
-                            <table>
-                                <thead>
+                            <table class="w-full">
+                                <thead class="bg-gray-800/60">
                                     <tr>
-                                        <th class="text-white">Team</th>
-                                        <th class="text-white">Key Input Metrics to Track</th>
-                                        <th class="text-white">Archetype Influence</th>
+                                        <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Team</th>
+                                        <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Key Input Metrics to Track</th>
+                                        <th class="p-4 text-left text-sm font-semibold text-white tracking-wider">Archetype Influence</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-slate-300 text-left">
-                                    <tr>
-                                        <td class="font-semibold text-white">Sales & Marketing</td>
-                                        <td>Number of new projects in strategic areas (e.g., AI, Data Governance)</td>
-                                        <td><span class="font-medium text-cyan-400">Service-Led & Growth-Story</span></td>
+                                <tbody class="text-gray-300 text-left">
+                                    <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                        <td class="p-4 font-semibold text-white align-top">Sales & Marketing</td>
+                                        <td class="p-4 text-sm align-top">Number of new projects in strategic areas (e.g., AI, Data Governance)</td>
+                                        <td class="p-4 text-sm align-top"><span class="font-medium text-cyan-400">Service-Led & Growth-Story</span></td>
                                     </tr>
-                                    <tr>
-                                        <td class="font-semibold text-white">Delivery & Practice</td>
-                                        <td>Quantified client business value (ROI %) & CSAT scores</td>
-                                        <td><span class="font-medium text-emerald-400">Outcome-Led</span></td>
+                                    <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                        <td class="p-4 font-semibold text-white align-top">Delivery & Practice</td>
+                                        <td class="p-4 text-sm align-top">Quantified client business value (ROI %) & CSAT scores</td>
+                                        <td class="p-4 text-sm align-top"><span class="font-medium text-emerald-400">Outcome-Led</span></td>
                                     </tr>
-                                    <tr>
-                                        <td class="font-semibold text-white">Product/Accelerators</td>
-                                        <td>Active usage of proprietary tools (e.g., Liftoff, Synapse)</td>
-                                        <td><span class="font-medium text-amber-400">Product-Led</span></td>
+                                    <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                        <td class="p-4 font-semibold text-white align-top">Product/Accelerators</td>
+                                        <td class="p-4 text-sm align-top">Active usage of proprietary tools (e.g., Liftoff, Synapse)</td>
+                                        <td class="p-4 text-sm align-top"><span class="font-medium text-amber-400">Product-Led</span></td>
                                     </tr>
-                                    <tr>
-                                        <td class="font-semibold text-white">Human Resources</td>
-                                        <td>Consultants certified in strategic capabilities</td>
-                                        <td><span class="font-medium text-cyan-400">Service-Led (Talent)</span></td>
+                                    <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                        <td class="p-4 font-semibold text-white align-top">Human Resources</td>
+                                        <td class="p-4 text-sm align-top">Consultants certified in strategic capabilities</td>
+                                        <td class="p-4 text-sm align-top"><span class="font-medium text-cyan-400">Service-Led (Talent)</span></td>
                                     </tr>
-                                    <tr>
-                                        <td class="font-semibold text-white">Finance/Leadership</td>
-                                        <td>Net Revenue Retention by Client Cohort</td>
-                                        <td><span class="font-medium text-fuchsia-400">Growth-Story (IPO)</span></td>
+                                    <tr class="border-t border-gray-700 hover:bg-gray-800/50 transition-colors">
+                                        <td class="p-4 font-semibold text-white align-top">Finance/Leadership</td>
+                                        <td class="p-4 text-sm align-top">Net Revenue Retention by Client Cohort</td>
+                                        <td class="p-4 text-sm align-top"><span class="font-medium text-fuchsia-400">Growth-Story (IPO)</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -618,12 +379,10 @@
                     </div>
                 </div>
             </section>
-
         </main>
 
-        <!-- Footer -->
-        <footer class="text-center py-12 mt-16 text-slate-500 text-sm">
-            <p>North Star Metrics Analysis • October 2025</p>
+        <footer class="text-center py-12 mt-16 text-gray-500 text-sm">
+            <p>&copy; 2026 Blueprint Technologies. North Star Metrics Analysis.</p>
         </footer>
     </div>
 </body>
