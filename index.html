@@ -95,6 +95,9 @@
                     <a href="stack.html" class="border border-white/70 hover:border-white text-white text-sm font-semibold py-1.5 px-4 rounded-md transition-colors">
                     Product Comparison
                     </a>
+                    <a href="https://bpcs.com/contact" class="border border-white/70 hover:border-white text-white text-sm font-semibold py-1.5 px-4 rounded-md transition-colors">
+                    Connect
+                    </a>
                 </div>
             </div>
         </nav>
@@ -224,7 +227,7 @@
         const strategyData = {
             northStarMetrics: [
                 { id: "revenue", symbol: "💰", label: "Revenue Growth", value: "$23M", sub: "New Bookings", description: "Targeting $23M in new bookings and 150% Net Revenue Retention." },
-                { id: "customer", symbol: "🤝", label: "Csutomer Acquisition", value: "120+", sub: "New Customer", description: "Secure over 180 new high-value customer through strategic outreach." },
+                { id: "customers", symbol: "🤝", label: "Customer Acquisition", value: "180+", sub: "New Customers", description: "Secure over 180 new high-value customers through strategic outreach." },
                 { id: "profit", symbol: "📈", label: "Profitability", value: "21%", sub: "EBITDA Margin", description: "Increase our overall EBITDA margin to a target of 21%." },
                 { id: "leadership", symbol: "🏆", label: "Market Leadership", value: "Top Tier", sub: "Awards & Recognition", description: "Win a Databricks Partner of the Year Award and achieve Gartner Magic Quadrant placement." },
                 { id: "alliances", symbol: "🔗", label: "Strategic Alliances", value: "3x", sub: "Partner Bookings", description: "Achieve 3x partner-sourced bookings via Databricks and elevate Microsoft partnership status." },
@@ -249,25 +252,33 @@
                     name: "Product",
                     goal: "To build and manage a market-defining portfolio of Databricks-native products that drive scalable, high-margin revenue and establish Blueprint as an indispensable technology partner.",
                     objectives: [
-                        { title: "Launch Flagship Products to Capture On-Ramp and AI Markets", pillar: "duality", northStar: ["revenue", "leadership", "partners"], keyResults: [
-                            { text: "Complete the MVP of the Liftoff automated migration accelerator, directly competing with Impetus LeapLogic, by March 31", status: "Not Started" },
+                        { title: "Launch Flagship Products to Capture On-Ramp and AI Markets", pillar: "duality", northStar: ["revenue", "leadership", "customers"], keyResults: [
+                            { text: "Complete the MVP of the Liftoff automated migration accelerator by March 31", status: "Not Started" },
                             { text: "Release the Synapse agentic AI framework with an initial library of 15 pre-built industry agents by September 1", status: "Not Started" },
                             { text: "Secure 5 paying pilot customers for Liftoff and generate $250k in pipeline from Synapse by EOY", status: "Not Started" },
+                            { text: "Achieve a 40% reduction in migration time and cost for pilot customers", status: "Not Started" },
+                            { text: "Co-present a Synapse success story with a strategic client at a major industry webinar", status: "Not Started" },
                         ]},
                         { title: "Dominate the Databricks Ecosystem and Achieve Premier Partner Status", pillar: "troika", northStar: ["alliances", "leadership"], keyResults: [
                             { text: "Get Liftoff and Synapse officially certified as Databricks Brickbuilder Solutions", status: "Not Started" },
                             { text: "Publish one of our products on the Databricks Marketplace and generate 100 qualified leads from it", status: "Not Started" },
                             { text: "Achieve a 9/10 partner satisfaction score from the Databricks product alignment team", status: "Not Started" },
+                            { text: "Develop a comprehensive partner enablement program with certification for 5 strategic partners", status: "Not Started" },
+                            { text: "Generate $1M in partner-influenced revenue by EOY", status: "Not Started" },
                         ]},
                         { title: "Operationalize the 'Blueprint Way' Productization Framework", pillar: "talent", northStar: ["profit"], keyResults: [
                             { text: "Publish the official Accelerator vs. Tool vs. Product decision matrix and governance model by Jan 31", status: "Not Started" },
                             { text: "Achieve 100% adoption of the new product lifecycle management (PLM) software across all teams", status: "Not Started" },
                             { text: "Retire at least 5 legacy accelerators to refocus engineering efforts on core products", status: "Not Started" },
+                            { text: "Implement a value-based, three-tiered pricing model for all major products by Q2", status: "Not Started" },
+                            { text: "Shift 50% of product-related revenue from services to a recurring/licensing model by EOY", status: "Not Started" },
                         ]},
-                        { title: "Drive Product-Led Growth and Market-Driven Innovation", pillar: "duality", northStar: ["partners", "revenue", "leadership"], keyResults: [
+                        { title: "Drive Product-Led Growth and Market-Driven Innovation", pillar: "duality", northStar: ["customers", "revenue", "leadership"], keyResults: [
                             { text: "Develop a self-service trial or demo environment for one of our On-Ramp tools, generating 200 new MQLs", status: "Not Started" },
                             { text: "Recruit 10 strategic customers for a Customer Advisory Board (CAB) to drive H2 roadmap", status: "Not Started" },
-                            { text: "Produce quarterly competitive landscape reports to ensure product differentiation", status: "Not Started" },
+                            { text: "Produce quarterly competitive landscape reports to identify 3 white space opportunities", status: "Not Started" },
+                            { text: "Achieve a 10% conversion rate from free trial to a paid discovery engagement", status: "Not Started" },
+                            { text: "Incorporate the top 5 feedback items from the CAB into the H2 product roadmap", status: "Not Started" },
                         ]}
                     ]
                 },
@@ -279,21 +290,29 @@
                             { text: "Build a functional Cortex prototype with core Ontology, Control Plane, and Action Graph layers", status: "Not Started" },
                             { text: "Develop and train a proprietary LLM fine-tuned on anonymized data for a core vertical (e.g., Retail)", status: "Not Started" },
                             { text: "Achieve a 10% higher accuracy on a key industry benchmark task compared to baseline GPT-4", status: "Not Started" },
+                            { text: "Build an automated LLMOps pipeline, reducing manual model deployment effort by 90%", status: "Not Started" },
+                            { text: "Secure 2 pilot customers to test and validate the vertical-specific model", status: "Not Started" },
                         ]},
                         { title: "Develop and Commercialize a Scalable AI Agent Library", pillar: "duality", northStar: ["revenue", "profit"], keyResults: [
                             { text: "Develop and deploy a library of 15 distinct, production-ready AI agents", status: "Not Started" },
                             { text: "Package proprietary models as a premium add-on for the Synapse platform with a clear pricing model", status: "Not Started" },
                             { text: "Ensure 75% of new Synapse customers adopt at least one premium AI feature", status: "Not Started" },
+                            { text: "Ensure 80% of new client AI projects leverage at least 3 agents from the central library", status: "Not Started" },
+                            { text: "Reduce the cost-per-inference by 40% through model optimization and quantization techniques", status: "Not Started" },
                         ]},
-                        { title: "Drive Ecosystem Leadership via Marketplace and Open Source", pillar: "opensource", northStar: ["leadership", "alliances", "partners"], keyResults: [
-                            { text: "List and get approval for 3 core Blueprint products on the Databricks Marketplace, achieving Featured Partner status", status: "Not Started" },
+                        { title: "Drive Ecosystem Leadership via Marketplace and Open Source", pillar: "opensource", northStar: ["leadership", "alliances", "customers"], keyResults: [
+                            { text: "List and get approval for 3 core Blueprint products on the Databricks Marketplace", status: "Not Started" },
+                            { text: "Achieve Featured Partner status on the Marketplace homepage for at least one quarter", status: "Not Started" },
                             { text: "Release a valuable component of our stack as an open-source project and achieve 1,000 GitHub stars", status: "Not Started" },
                             { text: "Attract 2 senior engineering hires who cite the open-source project as a primary reason for joining", status: "Not Started" },
+                            { text: "Generate 500 new MQLs directly from our Databricks Marketplace listings", status: "Not Started" },
                         ]},
                         { title: "Ensure Enterprise-Grade Security, Scalability, and Ethics", pillar: "troika", northStar: ["leadership"], keyResults: [
                             { text: "Obtain SOC 2 Type II compliance for the Cortex platform", status: "Not Started" },
                             { text: "Ensure core products are fully portable and deployable on AWS, Azure, and GCP", status: "Not Started" },
                             { text: "Implement a formal AI Ethics Review Board that signs off on all new agent and model deployments", status: "Not Started" },
+                            { text: "Pass 3 external penetration tests with zero critical vulnerabilities found", status: "Not Started" },
+                            { text: "File for 3 patents related to the novel technologies within Cortex and Liftoff", status: "Not Started" },
                         ]}
                     ]
                 },
@@ -304,22 +323,30 @@
                         { title: "Win Databricks Partner of the Year via CoE Excellence", pillar: "flywheel", northStar: ["leadership", "profit"], keyResults: [
                             { text: "Staff a CoE with 10 of our top architects (Builders) ring-fenced from standard billable work", status: "Not Started" },
                             { text: "Have the CoE identify and document 3 client success stories that perfectly align with award categories", status: "Not Started" },
-                            { text: "Win at least one major Databricks Partner of the Year award, kickstarting the Awards-to-Sales Flywheel", status: "Not Started" },
+                            { text: "Win at least one major Databricks Partner of the Year award", status: "Not Started" },
+                            { text: "Produce 3 video testimonials with these clients to be included in the award submissions", status: "Not Started" },
+                            { text: "Establish a CoE charter that defines its mandate for IP creation, best practices, and training", status: "Not Started" },
                         ]},
                         { title: "Implement a Product-Led Delivery Model for Efficiency", pillar: "duality", northStar: ["profit"], keyResults: [
                             { text: "Reduce the average time-to-value for new clients by 30% using our Liftoff and Synapse products", status: "Not Started" },
                             { text: "Increase the gross margin on product-led projects to 60%, compared to 40% for pure-services projects", status: "Not Started" },
                             { text: "Achieve a 95% on-time, on-budget project completion rate for all product-led engagements", status: "Not Started" },
+                            { text: "Increase the reuse of CoE-developed code modules and frameworks by 40%", status: "Not Started" },
+                            { text: "Reduce project startup time from 2 weeks to 3 days", status: "Not Started" },
                         ]},
                         { title: "Aggressively Increase Databricks Expertise and Certifications", pillar: "troika", northStar: ["alliances", "leadership"], keyResults: [
                             { text: "Increase the total number of Databricks certifications across the company by 50%", status: "Not Started" },
                             { text: "Achieve Databricks Expert-level competency in at least 2 strategic areas (e.g., AI/ML, Data Engineering)", status: "Not Started" },
                             { text: "Ensure 100% of client-facing delivery staff hold at least one Databricks certification", status: "Not Started" },
+                            { text: "Deliver 20 client-facing Bootcamps for our flagship products in 2026", status: "Not Started" },
+                            { text: "Convert 50% of Bootcamp engagements into larger, follow-on projects", status: "Not Started" },
                         ]},
-                        { title: "Ensure World-Class Customer Success and Expansion", pillar: "flywheel", northStar: ["revenue", "partners"], keyResults: [
+                        { title: "Ensure World-Class Customer Success and Expansion", pillar: "flywheel", northStar: ["revenue", "customers"], keyResults: [
                             { text: "Achieve a Net Promoter Score (NPS) of +60 across all active clients", status: "Not Started" },
                             { text: "Ensure 80% of clients expand their engagement with us within 12 months", status: "Not Started" },
                             { text: "Reduce customer churn to less than 5% annually", status: "Not Started" },
+                            { text: "Implement a mandatory Sales-to-Delivery Handoff meeting for 100% of new projects", status: "Not Started" },
+                            { text: "Maintain a firm-wide billable utilization rate of 80% for our Scaler delivery consultants", status: "Not Started" },
                         ]}
                     ]
                 },
@@ -327,25 +354,33 @@
                     name: "Sales",
                     goal: "To build a world-class sales organization that executes a disciplined, solution-centric GTM motion, masters the Troika partnership, and consistently exceeds revenue targets.",
                     objectives: [
-                        { title: "Achieve Revenue and Net Revenue Retention Targets", pillar: "flywheel", northStar: ["revenue", "profit"], keyResults: [
+                        { title: "Achieve Revenue and New Customer Acquisition Targets", pillar: "flywheel", northStar: ["revenue", "profit", "customers"], keyResults: [
                             { text: "Achieve $23M in new bookings for the fiscal year", status: "Not Started" },
+                            { text: "Secure 180 new customers through product-led and solution-based selling", status: "Not Started" },
                             { text: "Increase Net Revenue Retention (NRR) to 150%", status: "Not Started" },
                             { text: "Increase the average initial deal size by 25%", status: "Not Started" },
+                            { text: "Convert 75% of 'Acquire' phase clients into multi-year 'Expand/Scale' phase partners", status: "Not Started" },
                         ]},
                         { title: "Master the Troika Partnership with Databricks and Hyperscalers", pillar: "troika", northStar: ["alliances", "revenue"], keyResults: [
                             { text: "Achieve top-tier partner status with AWS and Azure", status: "Not Started" },
-                            { text: "Generate 30% of our total sales pipeline through hyperscaler co-sell channels, targeting a 3x increase in Databricks-sourced bookings", status: "Not Started" },
-                            { text: "Secure $500k in co-sell funding from hyperscaler partners to subsidize POCs and pilots", status: "Not Started" },
+                            { text: "Generate 30% of our total sales pipeline through hyperscaler co-sell channels", status: "Not Started" },
+                            { text: "Target a 3x increase in Databricks-sourced bookings", status: "Not Started" },
+                            { text: "Secure $500k in co-sell funding from partners to subsidize POCs and pilots", status: "Not Started" },
+                            { text: "Secure 20 meetings with C-level executives at our top target accounts", status: "Not Started" },
                         ]},
                         { title: "Transition to a Product-Led and Solution-Based Selling Motion", pillar: "duality", northStar: ["revenue"], keyResults: [
-                            { text: "Shift 80% of initial sales conversations away from staff augmentation to our Liftoff and Synapse product offerings", status: "Not Started" },
+                            { text: "Shift 80% of initial sales conversations away from staff augmentation to our Liftoff and Synapse offerings", status: "Not Started" },
                             { text: "Increase the product-attach rate to 90% for all new deals", status: "Not Started" },
                             { text: "Decrease the average sales cycle from 90 days to 65 days for product-led deals", status: "Not Started" },
+                            { text: "Generate 40% of the sales pipeline from marketing-sourced leads", status: "Not Started" },
+                            { text: "Achieve 100% adoption of our defined MEDDPICC sales methodology", status: "Not Started" },
                         ]},
-                        { title: "Build a High-Performance, Specialized Sales Team", pillar: "talent", northStar: ["revenue", "partners"], keyResults: [
+                        { title: "Build a High-Performance, Specialized Sales Team", pillar: "talent", northStar: ["revenue", "customers"], keyResults: [
                             { text: "Hire 5 new Account Executives who meet our Challenger Sale profile", status: "Not Started" },
                             { text: "Create 3 dedicated industry verticals (e.g., Retail, Financial Services) with Vertical Leads", status: "Not Started" },
+                            { text: "Ensure 60% of new revenue comes from our target industry verticals", status: "Not Started" },
                             { text: "Achieve 80% quota attainment across the sales team", status: "Not Started" },
+                            { text: "Implement a rigorous sales training and certification program for all reps", status: "Not Started" },
                         ]}
                     ]
                 },
@@ -357,21 +392,29 @@
                             { text: "Win a major Databricks Partner of the Year award", status: "Not Started" },
                             { text: "Launch a multi-channel campaign around the win that generates 1,000 new leads", status: "Not Started" },
                             { text: "Directly attribute $5M in sales pipeline to the awards campaign", status: "Not Started" },
+                            { text: "Produce 10 video case studies with satisfied clients", status: "Not Started" },
+                            { text: "Establish a formal customer reference program with 20 active participants", status: "Not Started" },
                         ]},
                         { title: "Establish Premier Thought Leadership in the Databricks Ecosystem", pillar: "flywheel", northStar: ["leadership"], keyResults: [
                             { text: "Publish a definitive 'State of Databricks' annual report that becomes the industry benchmark", status: "Not Started" },
                             { text: "Secure 10 media placements or bylines in top-tier tech publications", status: "Not Started" },
                             { text: "Increase our share of voice on social media for key Databricks-related terms by 300%", status: "Not Started" },
+                            { text: "Publish 50 high-quality, technical blog posts and 4 long-form whitepapers", status: "Not Started" },
+                            { text: "Host 12 webinars with an average attendance of 200 people", status: "Not Started" },
                         ]},
-                        { title: "Drive Predictable, High-Quality Pipeline Growth", pillar: "flywheel", northStar: ["revenue"], keyResults: [
+                        { title: "Drive Predictable, High-Quality Pipeline for New Customer Acquisition", pillar: "flywheel", northStar: ["revenue", "customers"], keyResults: [
                             { text: "Generate 500 Marketing Qualified Leads (MQLs) per quarter", status: "Not Started" },
                             { text: "Achieve a 30% MQL-to-SQL conversion rate", status: "Not Started" },
                             { text: "Source 40% of the company's total sales pipeline", status: "Not Started" },
+                            { text: "Relaunch the Blueprint website with new product-focused messaging", status: "Not Started" },
+                            { text: "Improve our website's conversion rate from 1% to 3%", status: "Not Started" },
                         ]},
-                        { title: "Dominate Key Industry Events with Targeted ABM Campaigns", pillar: "flywheel", northStar: ["leadership", "partners"], keyResults: [
+                        { title: "Dominate Key Industry Events with Targeted ABM Campaigns", pillar: "flywheel", northStar: ["leadership", "customers"], keyResults: [
                             { text: "Secure a premium sponsorship and speaking slot at the Databricks Data + AI Summit", status: "Not Started" },
                             { text: "Launch targeted ABM campaigns against our top 50 target accounts, generating 10 new opportunities", status: "Not Started" },
                             { text: "Generate 200 qualified leads and schedule 50 meetings from our presence at the Summit", status: "Not Started" },
+                            { text: "Host the most talked-about party or networking event at the Summit", status: "Not Started" },
+                            { text: "Achieve a 50% engagement rate within those target accounts", status: "Not Started" },
                         ]}
                     ]
                 },
@@ -383,21 +426,29 @@
                             { text: "Finalize and roll out the job descriptions, competencies, and compensation bands for both tracks by Q1", status: "Not Started" },
                             { text: "Successfully transition 90% of the technical team into the new framework without voluntary attrition", status: "Not Started" },
                             { text: "Implement a formal rotation program and have 10% of the team participate", status: "Not Started" },
+                            { text: "Launch a new performance management process based on regular feedback and coaching", status: "Not Started" },
+                            { text: "Develop a structured, 4-week onboarding program for all new hires", status: "Not Started" },
                         ]},
                         { title: "Become a Top Workplace and Significantly Reduce Attrition", pillar: "talent", northStar: ["leadership"], keyResults: [
                             { text: "Reduce overall voluntary attrition from 15% to below 10%", status: "Not Started" },
                             { text: "Increase our employee Net Promoter Score (eNPS) from +20 to +45", status: "Not Started" },
                             { text: "Be named one of the 'Best Places to Work' in our region", status: "Not Started" },
+                            { text: "Reduce the average time-to-hire for technical roles from 45 to 30 days", status: "Not Started" },
+                            { text: "Increase the percentage of new hires sourced from employee referrals to 40%", status: "Not Started" },
                         ]},
                         { title: "Re-architect Financial and IT Systems for a Product-Led Business", pillar: "duality", northStar: ["profit"], keyResults: [
                             { text: "Implement new financial software to manage hybrid subscription and services revenue models", status: "Not Started" },
                             { text: "Deliver monthly reports that clearly distinguish between product ARR and services revenue", status: "Not Started" },
                             { text: "Consolidate our CRM, ERP, and PSA systems onto a single, integrated platform", status: "Not Started" },
+                            { text: "Select and implement a dedicated OKR software platform by Q1", status: "Not Started" },
+                            { text: "Reduce the number of manual, spreadsheet-based operational processes by 50%", status: "Not Started" },
                         ]},
                         { title: "Improve Profitability and Cash Flow", pillar: "duality", northStar: ["profit"], keyResults: [
                             { text: "Increase overall EBITDA margin to 21%", status: "Not Started" },
                             { text: "Reduce Days Sales Outstanding (DSO) from 60 to 45 days", status: "Not Started" },
                             { text: "Maintain a cash reserve of at least 6 months of operating expenses", status: "Not Started" },
+                            { text: "Create standardized, templatized contracts for all product and service offerings", status: "Not Started" },
+                            { text: "Reduce the average contract negotiation cycle time by 30%", status: "Not Started" },
                         ]}
                     ]
                 }
@@ -633,6 +684,8 @@
 
         function renderSidebarTabs() {
             const sidebar = document.getElementById('sidebar-tabs');
+            if (!sidebar) return;
+            sidebar.innerHTML = ''; // Clear existing tabs
             const allDeptsTab = { name: "All Departments" };
             
             [allDeptsTab, ...strategyData.departments].forEach((dept, index) => {
@@ -663,6 +716,7 @@
         
         function renderAllDepartments() {
              const contentContainer = document.getElementById('tab-content');
+             if (!contentContainer) return;
              let allHtml = '<div id="all-okrs-list" class="space-y-6">';
 
              strategyData.departments.forEach(department => {
@@ -718,8 +772,10 @@
 
         function renderDepartment(deptName) {
             const department = strategyData.departments.find(d => d.name === deptName);
+            if (!department) return;
             const deptIcon = strategyData.departmentIcons[deptName] || "";
             const contentContainer = document.getElementById('tab-content');
+            if (!contentContainer) return;
             
             contentContainer.innerHTML = `
                 <div class="space-y-4">
@@ -737,6 +793,7 @@
             `;
 
             const okrList = document.getElementById(`okr-list-${deptName.replace(/\s+/g, '')}`);
+            if (!okrList) return;
             
             department.objectives.forEach((obj, index) => {
                 const symbols = getNorthStarSymbols(obj.northStar);
@@ -828,7 +885,8 @@
              container.parentNode.replaceChild(newContainer, container);
              
              const freshContainer = document.getElementById('tab-content');
-             
+             if (!freshContainer) return;
+
              freshContainer.querySelectorAll('.accordion-toggle').forEach(toggle => {
                  toggle.addEventListener('click', function(e) {
                      e.preventDefault();
@@ -869,7 +927,9 @@
             const selectedArea = document.getElementById('area-filter').value;
             const activePillarEl = document.querySelector('.pillar-btn.pillar-active');
             const selectedPillar = activePillarEl ? activePillarEl.dataset.pillarId : 'all';
-            const allDeptTabActive = document.querySelector('.sidebar-tab.tab-active').textContent === 'All Departments';
+            const activeSidebarTab = document.querySelector('.sidebar-tab.tab-active');
+            if (!activeSidebarTab) return;
+            const allDeptTabActive = activeSidebarTab.textContent === 'All Departments';
 
             if (allDeptTabActive) {
                 const departmentGroups = document.querySelectorAll('#all-okrs-list .department-group');
@@ -985,4 +1045,4 @@
     </script>
 </body>
 </html>
-}
+
