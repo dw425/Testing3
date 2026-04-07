@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueprint Technologies | Engineering Throughput Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #000000;
+            background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20, 50, 90, 0.6), transparent 100%);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        .pillar-active { background-color: #3b82f6; color: white; border-color: #3b82f6; }
+        .kpi-card {
+            background: linear-gradient(180deg, rgba(31,41,55,0.6) 0%, rgba(17,24,39,0.6) 100%);
+            border: 1px solid rgba(75,85,99,0.5);
+        }
+        .panel {
+            background: rgba(17,24,39,0.55);
+            border: 1px solid rgba(55,65,81,0.6);
+            border-radius: 0.75rem;
+        }
+        .health-green { background-color: #10b981; }
+        .health-yellow { background-color: #f59e0b; }
+        .health-red { background-color: #ef4444; }
+        .health-gray { background-color: #6b7280; }
+        select {
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239CA3AF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat; background-position: right 0.7rem center;
+            background-size: 0.65rem auto; padding-right: 2.5rem;
+        }
+        table.proj-table th { position: sticky; top: 0; background: #0b1220; z-index: 1; }
+        .proj-row:hover { background: rgba(59,130,246,0.08); cursor: pointer; }
+        .detail-row { background: rgba(15,23,42,0.85); }
+        .variance-pos { color: #10b981; }
+        .variance-neg { color: #ef4444; }
+        .variance-flat { color: #d1d5db; }
+        .scrollbar-thin::-webkit-scrollbar { height: 8px; width: 8px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        .badge {
+            display: inline-block; padding: 2px 8px; border-radius: 9999px;
+            font-size: 10px; font-weight: 600; line-height: 1.4;
+        }
+        .badge-onshore { background: rgba(59,130,246,0.2); color: #93c5fd; border: 1px solid rgba(59,130,246,0.4); }
+        .badge-offshore { background: rgba(168,85,247,0.2); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.4); }
+        .badge-ai { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.35); margin-right: 4px; margin-bottom: 2px; }
+        .badge-pillar { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.35); }
+    </style>
+</head>
+<body class="text-gray-300">
+
+    <header class="bg-black/90 backdrop-blur-sm sticky top-0 z-20 border-b border-gray-800">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-x-4">
+                    <a href="https://bpcs.com/" title="Blueprint Home">
+                        <img width="120" height="24" src="https://bpcs.com/wp-content/uploads/2021/02/BlueprintLogo_White_Tiles-400x81.png" alt="Blueprint Logo">
+                    </a>
+                    <span class="border-l border-gray-700 h-6"></span>
+                    <h2 class="text-base font-semibold text-gray-400 hidden sm:block">Engineering Throughput</h2>
+                </div>
+                <div class="flex items-center gap-x-3">
+                    <a href="index.html" class="border border-white/70 hover:border-white text-white text-sm font-semibold py-1.5 px-4 rounded-md transition-colors">Strategic Plan</a>
+                    <a href="#projects" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-1.5 px-4 rounded-md transition-colors">All Projects</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Title -->
+        <section class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-white">Engineering Throughput Dashboard</h1>
+            <p class="mt-2 text-gray-400 max-w-3xl">Live view of developer delivery across <span class="text-white font-semibold">50 active projects</span>, mapped to the 2026 strategic pillars and departmental OKRs. Tracks on-shore vs off-shore output, planned-vs-actual variance, and the AI tooling powering each team.</p>
+        </section>
+
+        <!-- KPI Strip -->
+        <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+            <div class="kpi-card rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase tracking-wider">Total Engineers</div>
+                <div class="text-3xl font-bold text-white mt-1" id="kpi-engineers">—</div>
+                <div class="text-xs text-gray-500 mt-1"><span id="kpi-onshore">—</span> on-shore · <span id="kpi-offshore">—</span> off-shore</div>
+            </div>
+            <div class="kpi-card rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase tracking-wider">Active Projects</div>
+                <div class="text-3xl font-bold text-white mt-1" id="kpi-projects">—</div>
+                <div class="text-xs text-gray-500 mt-1">across 6 departments</div>
+            </div>
+            <div class="kpi-card rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase tracking-wider">Story Pts Delivered (Q)</div>
+                <div class="text-3xl font-bold text-white mt-1" id="kpi-delivered">—</div>
+                <div class="text-xs text-gray-500 mt-1">vs <span id="kpi-planned">—</span> planned</div>
+            </div>
+            <div class="kpi-card rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase tracking-wider">Avg Variance</div>
+                <div class="text-3xl font-bold mt-1" id="kpi-variance">—</div>
+                <div class="text-xs text-gray-500 mt-1">planned vs delivered</div>
+            </div>
+            <div class="kpi-card rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase tracking-wider">AI-Assisted Code</div>
+                <div class="text-3xl font-bold text-emerald-400 mt-1" id="kpi-aicode">—</div>
+                <div class="text-xs text-gray-500 mt-1"><span id="kpi-aitools">—</span> distinct tools in use</div>
+            </div>
+            <div class="kpi-card rounded-xl p-4">
+                <div class="text-xs text-gray-400 uppercase tracking-wider">Project Health</div>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="health-green w-3 h-3 rounded-full"></span><span class="text-white font-semibold" id="kpi-green">—</span>
+                    <span class="health-yellow w-3 h-3 rounded-full ml-2"></span><span class="text-white font-semibold" id="kpi-yellow">—</span>
+                    <span class="health-red w-3 h-3 rounded-full ml-2"></span><span class="text-white font-semibold" id="kpi-red">—</span>
+                </div>
+                <div class="text-xs text-gray-500 mt-2">green / yellow / red</div>
+            </div>
+        </section>
+
+        <!-- Filter Bar -->
+        <section class="panel p-4 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                <div>
+                    <label class="text-xs text-gray-400 uppercase tracking-wider">Department</label>
+                    <select id="filter-dept" class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 px-3 mt-1 text-sm text-white"></select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 uppercase tracking-wider">Strategic Pillar</label>
+                    <select id="filter-pillar" class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 px-3 mt-1 text-sm text-white"></select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 uppercase tracking-wider">Team Location</label>
+                    <select id="filter-location" class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 px-3 mt-1 text-sm text-white">
+                        <option value="all">All Teams</option>
+                        <option value="onshore">On-shore Heavy (>60%)</option>
+                        <option value="offshore">Off-shore Heavy (>60%)</option>
+                        <option value="balanced">Balanced</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 uppercase tracking-wider">AI Tool</label>
+                    <select id="filter-ai" class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 px-3 mt-1 text-sm text-white"></select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400 uppercase tracking-wider">Search</label>
+                    <input id="filter-search" type="search" placeholder="Project, initiative, OKR..." class="w-full bg-gray-800 border border-gray-600 rounded-md py-2 px-3 mt-1 text-sm text-white">
+                </div>
+            </div>
+            <div class="mt-3 text-xs text-gray-400">Showing <span id="filter-count" class="text-white font-semibold">—</span> of 50 projects</div>
+        </section>
+
+        <!-- Charts Row 1 -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="panel p-5 lg:col-span-2">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Throughput Trend — Story Points Delivered</h3>
+                        <p class="text-xs text-gray-400">Rolling 12 months · on-shore vs off-shore</p>
+                    </div>
+                </div>
+                <div style="height:280px"><canvas id="chart-trend"></canvas></div>
+            </div>
+            <div class="panel p-5">
+                <h3 class="text-lg font-bold text-white">AI Tool Mix</h3>
+                <p class="text-xs text-gray-400 mb-2">Distribution of AI tools across projects</p>
+                <div style="height:280px"><canvas id="chart-aimix"></canvas></div>
+            </div>
+        </section>
+
+        <!-- Charts Row 2 -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="panel p-5">
+                <h3 class="text-lg font-bold text-white">On-shore vs Off-shore Output</h3>
+                <p class="text-xs text-gray-400 mb-2">Per-engineer normalized productivity (this quarter)</p>
+                <div style="height:280px"><canvas id="chart-shore"></canvas></div>
+            </div>
+            <div class="panel p-5">
+                <h3 class="text-lg font-bold text-white">Delivery Variance Distribution</h3>
+                <p class="text-xs text-gray-400 mb-2">Planned-vs-delivered variance buckets across 50 projects</p>
+                <div style="height:280px"><canvas id="chart-variance"></canvas></div>
+            </div>
+        </section>
+
+        <!-- Charts Row 3 -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="panel p-5">
+                <h3 class="text-lg font-bold text-white">Throughput by Strategic Pillar</h3>
+                <p class="text-xs text-gray-400 mb-2">Story points delivered, grouped by 2026 strategic pillar</p>
+                <div style="height:280px"><canvas id="chart-pillar"></canvas></div>
+            </div>
+            <div class="panel p-5">
+                <h3 class="text-lg font-bold text-white">AI Acceptance Rate by Tool</h3>
+                <p class="text-xs text-gray-400 mb-2">% of suggestions kept by engineers (higher is better)</p>
+                <div style="height:280px"><canvas id="chart-acceptance"></canvas></div>
+            </div>
+        </section>
+
+        <!-- Initiative Rollup -->
+        <section class="panel p-6 mb-8">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Initiative Rollup</h2>
+                    <p class="text-sm text-gray-400">Throughput aggregated by 2026 strategic initiative — anchored to the OKRs from the strategic plan</p>
+                </div>
+            </div>
+            <div id="initiative-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- Project Table -->
+        <section id="projects" class="panel p-6 mb-8">
+            <div class="flex justify-between items-end mb-4 flex-wrap gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">All Projects</h2>
+                    <p class="text-sm text-gray-400">Click any row to expand the OKR linkage, AI tool detail, and team composition.</p>
+                </div>
+                <div class="text-xs text-gray-500">Sort: <button data-sort="variance" class="sort-btn underline hover:text-white">Variance</button> · <button data-sort="delivered" class="sort-btn underline hover:text-white">Delivered</button> · <button data-sort="aiPct" class="sort-btn underline hover:text-white">AI %</button> · <button data-sort="name" class="sort-btn underline hover:text-white">Name</button></div>
+            </div>
+            <div class="overflow-x-auto scrollbar-thin">
+                <table class="proj-table w-full text-sm text-left">
+                    <thead class="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-700">
+                        <tr>
+                            <th class="py-3 px-2">Health</th>
+                            <th class="py-3 px-2">Project</th>
+                            <th class="py-3 px-2">Department</th>
+                            <th class="py-3 px-2">Initiative</th>
+                            <th class="py-3 px-2 text-right">Team</th>
+                            <th class="py-3 px-2 text-right">Planned</th>
+                            <th class="py-3 px-2 text-right">Delivered</th>
+                            <th class="py-3 px-2 text-right">Variance</th>
+                            <th class="py-3 px-2 text-right">PRs</th>
+                            <th class="py-3 px-2 text-right">Cycle (d)</th>
+                            <th class="py-3 px-2 text-right">AI %</th>
+                            <th class="py-3 px-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="proj-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="text-center text-xs text-gray-500 py-6 border-t border-gray-800">
+            <p>Blueprint Technologies · Engineering Throughput Dashboard · Mapped to 2026 Strategic Plan OKRs</p>
+            <p class="mt-1">Data shown is illustrative. Wire to Jira / GitHub / LinearB / Cursor analytics for live values.</p>
+        </footer>
+    </main>
+
+    <script>
+    // ===========================================================
+    // DATA MODEL — anchored to the 2026 Strategic Plan
+    // ===========================================================
+
+    const PILLARS = [
+        { id: "duality",    name: "Product Duality",         color: "#3b82f6" },
+        { id: "flywheel",   name: "Awards-to-Sales Flywheel", color: "#f59e0b" },
+        { id: "troika",     name: "Troika Partnership",       color: "#a855f7" },
+        { id: "talent",     name: "Builder vs. Scaler",       color: "#ec4899" },
+        { id: "opensource", name: "Strategic Open Source",    color: "#10b981" }
+    ];
+
+    const AI_TOOLS = [
+        { id: "claudecode", name: "Claude Code",   color: "#d97706", category: "agentic" },
+        { id: "copilot",    name: "GitHub Copilot",color: "#6366f1", category: "completion" },
+        { id: "cursor",     name: "Cursor",        color: "#0ea5e9", category: "ide" },
+        { id: "windsurf",   name: "Windsurf",      color: "#14b8a6", category: "ide" },
+        { id: "darkforge",  name: "DARKFORGE Agents", color: "#a855f7", category: "agentic" },
+        { id: "chatgpt",    name: "ChatGPT",       color: "#10b981", category: "chat" },
+        { id: "codeium",    name: "Codeium",       color: "#84cc16", category: "completion" },
+        { id: "devin",      name: "Devin",         color: "#ef4444", category: "agentic" }
+    ];
+
+    // 50 projects mapped to OKRs from the strategic plan + Blueprint's real product portfolio
+    // p = pillar, d = department, on/off = team headcount, plan/del = story points planned/delivered,
+    // pr = PRs merged this quarter, cy = avg cycle time days, ai = list of tool ids,
+    // acc = ai acceptance rate, aiPct = % of code AI-assisted, st = status, okr = linked OKR text
+    const PROJECTS = [
+        // ---- Product (8) ----
+        { id:"P01", name:"Liftoff Migration Accelerator",          d:"Product",   p:"duality",    on:6,  off:9,  plan:142, del:131, pr:58, cy:4.1, ai:["claudecode","copilot","cursor"], acc:0.64, aiPct:0.46, st:"On Track",   okr:"Complete the MVP of the Liftoff automated migration accelerator by March 31" },
+        { id:"P02", name:"Synapse Agentic AI Framework",           d:"Product",   p:"duality",    on:8,  off:6,  plan:165, del:158, pr:71, cy:3.6, ai:["claudecode","cursor","darkforge"], acc:0.71, aiPct:0.58, st:"On Track",   okr:"Release Synapse with an initial library of 15 pre-built industry agents by Sept 1" },
+        { id:"P03", name:"Brickbuilder Certification Track",       d:"Product",   p:"troika",     on:3,  off:2,  plan:48,  del:42,  pr:19, cy:5.2, ai:["copilot","chatgpt"], acc:0.55, aiPct:0.31, st:"On Track",   okr:"Get Liftoff and Synapse officially certified as Databricks Brickbuilder Solutions" },
+        { id:"P04", name:"Marketplace Listing — Liftoff",          d:"Product",   p:"troika",     on:2,  off:4,  plan:36,  del:28,  pr:14, cy:6.1, ai:["copilot","cursor"], acc:0.51, aiPct:0.34, st:"At Risk",    okr:"Publish a product on the Databricks Marketplace and generate 100 qualified leads" },
+        { id:"P05", name:"Self-Service Trial Environment",         d:"Product",   p:"duality",    on:4,  off:5,  plan:88,  del:91,  pr:36, cy:3.8, ai:["claudecode","copilot"], acc:0.66, aiPct:0.49, st:"On Track",   okr:"Develop a self-service trial environment for an On-Ramp tool, generating 200 MQLs" },
+        { id:"P06", name:"Customer Advisory Board Portal",         d:"Product",   p:"duality",    on:2,  off:3,  plan:42,  del:38,  pr:16, cy:4.4, ai:["copilot"], acc:0.53, aiPct:0.32, st:"On Track",   okr:"Recruit 10 strategic customers for a Customer Advisory Board" },
+        { id:"P07", name:"PLM Software Integration",               d:"Product",   p:"talent",     on:3,  off:2,  plan:55,  del:39,  pr:18, cy:7.2, ai:["copilot"], acc:0.48, aiPct:0.26, st:"At Risk",    okr:"Achieve 100% adoption of new PLM software across all teams" },
+        { id:"P08", name:"Tiered Pricing Engine",                  d:"Product",   p:"duality",    on:3,  off:4,  plan:64,  del:61,  pr:25, cy:4.0, ai:["claudecode","copilot"], acc:0.62, aiPct:0.44, st:"On Track",   okr:"Implement a value-based, three-tiered pricing model for all major products by Q2" },
+
+        // ---- Technology (10) ----
+        { id:"P09", name:"Cortex Platform — Ontology Layer",       d:"Technology",p:"duality",    on:5,  off:3,  plan:110, del:108, pr:44, cy:3.5, ai:["claudecode","cursor","darkforge"], acc:0.74, aiPct:0.61, st:"On Track",   okr:"Build a functional Cortex prototype with core Ontology, Control Plane, and Action Graph layers" },
+        { id:"P10", name:"Cortex Platform — Control Plane",        d:"Technology",p:"duality",    on:4,  off:4,  plan:98,  del:89,  pr:38, cy:4.2, ai:["claudecode","cursor"], acc:0.69, aiPct:0.55, st:"On Track",   okr:"Build a functional Cortex prototype with core Ontology, Control Plane, and Action Graph layers" },
+        { id:"P11", name:"Cortex Platform — Action Graph",         d:"Technology",p:"duality",    on:4,  off:3,  plan:82,  del:71,  pr:31, cy:4.8, ai:["claudecode","darkforge"], acc:0.67, aiPct:0.53, st:"At Risk",    okr:"Build a functional Cortex prototype with core Ontology, Control Plane, and Action Graph layers" },
+        { id:"P12", name:"Vertical LLM — Retail Fine-tune",        d:"Technology",p:"duality",    on:3,  off:2,  plan:74,  del:78,  pr:22, cy:5.0, ai:["claudecode","chatgpt"], acc:0.59, aiPct:0.41, st:"On Track",   okr:"Develop and train a proprietary LLM fine-tuned on anonymized data for a core vertical (Retail)" },
+        { id:"P13", name:"LLMOps Automation Pipeline",             d:"Technology",p:"duality",    on:4,  off:5,  plan:96,  del:101, pr:42, cy:3.4, ai:["claudecode","cursor","copilot"], acc:0.72, aiPct:0.59, st:"On Track",   okr:"Build an automated LLMOps pipeline, reducing manual model deployment effort by 90%" },
+        { id:"P14", name:"AI Agent Library — Core 15",             d:"Technology",p:"duality",    on:5,  off:7,  plan:138, del:127, pr:61, cy:3.9, ai:["claudecode","darkforge","cursor"], acc:0.70, aiPct:0.62, st:"On Track",   okr:"Develop and deploy a library of 15 distinct, production-ready AI agents" },
+        { id:"P15", name:"Marketplace Featured Listing",           d:"Technology",p:"opensource", on:2,  off:3,  plan:46,  del:48,  pr:21, cy:3.7, ai:["copilot","cursor"], acc:0.61, aiPct:0.43, st:"On Track",   okr:"Achieve Featured Partner status on the Marketplace homepage for at least one quarter" },
+        { id:"P16", name:"Open Source SDK Release",                d:"Technology",p:"opensource", on:3,  off:4,  plan:68,  del:65,  pr:28, cy:4.1, ai:["claudecode","copilot"], acc:0.63, aiPct:0.47, st:"On Track",   okr:"Drive Ecosystem Leadership via Marketplace and Open Source" },
+        { id:"P17", name:"Enterprise Security Hardening",          d:"Technology",p:"troika",     on:5,  off:2,  plan:88,  del:74,  pr:33, cy:5.5, ai:["copilot","chatgpt"], acc:0.52, aiPct:0.30, st:"At Risk",    okr:"Ensure Enterprise-Grade Security, Scalability, and Ethics" },
+        { id:"P18", name:"Inference Cost Optimization",            d:"Technology",p:"duality",    on:3,  off:3,  plan:60,  del:64,  pr:24, cy:3.8, ai:["claudecode","cursor"], acc:0.68, aiPct:0.51, st:"On Track",   okr:"Reduce the cost-per-inference by 40% through optimization and quantization" },
+
+        // ---- Delivery (10) ----
+        { id:"P19", name:"Pipeline Compass (Databricks App)",      d:"Delivery",  p:"flywheel",   on:4,  off:6,  plan:104, del:96,  pr:41, cy:4.0, ai:["claudecode","cursor"], acc:0.66, aiPct:0.52, st:"On Track",   okr:"Win Databricks Partner of the Year via CoE Excellence" },
+        { id:"P20", name:"RISKIQ Risk Profiling App",              d:"Delivery",  p:"duality",    on:3,  off:5,  plan:82,  del:79,  pr:34, cy:4.2, ai:["claudecode","copilot"], acc:0.64, aiPct:0.49, st:"On Track",   okr:"Implement a Product-Led Delivery Model for Efficiency" },
+        { id:"P21", name:"Blueprint-IQ Analytics Platform",        d:"Delivery",  p:"duality",    on:4,  off:7,  plan:118, del:108, pr:48, cy:4.4, ai:["claudecode","cursor","copilot"], acc:0.65, aiPct:0.50, st:"On Track",   okr:"Implement a Product-Led Delivery Model for Efficiency" },
+        { id:"P22", name:"LHO — Lakehouse Optimizer Pivot",        d:"Delivery",  p:"duality",    on:3,  off:2,  plan:54,  del:41,  pr:18, cy:6.5, ai:["claudecode"], acc:0.58, aiPct:0.38, st:"At Risk",    okr:"Build all future features as Databricks Apps via AI Factory methodology" },
+        { id:"P23", name:"Infor_Convert v4 (PHOENIX)",             d:"Delivery",  p:"duality",    on:4,  off:8,  plan:148, del:142, pr:64, cy:3.7, ai:["claudecode","cursor","darkforge"], acc:0.73, aiPct:0.64, st:"On Track",   okr:"Reduce time-to-value for new clients by 30% using Liftoff and Synapse" },
+        { id:"P24", name:"UAnaTool / Flow Analyzer",               d:"Delivery",  p:"duality",    on:3,  off:6,  plan:96,  del:88,  pr:39, cy:4.1, ai:["claudecode","darkforge"], acc:0.69, aiPct:0.56, st:"On Track",   okr:"Increase reuse of CoE-developed code modules and frameworks by 40%" },
+        { id:"P25", name:"NiFi Migration Agent Factory",           d:"Delivery",  p:"duality",    on:2,  off:5,  plan:78,  del:84,  pr:32, cy:3.5, ai:["claudecode","darkforge","cursor"], acc:0.75, aiPct:0.66, st:"On Track",   okr:"Reduce project startup time from 2 weeks to 3 days" },
+        { id:"P26", name:"PLANXS II Federal Build (USCIS)",        d:"Delivery",  p:"flywheel",   on:9,  off:0,  plan:172, del:159, pr:78, cy:4.6, ai:["claudecode","copilot"], acc:0.61, aiPct:0.43, st:"On Track",   okr:"Win Databricks Partner of the Year via CoE Excellence" },
+        { id:"P27", name:"SF 49ers Redshift→Databricks",           d:"Delivery",  p:"troika",     on:5,  off:6,  plan:124, del:115, pr:52, cy:4.3, ai:["claudecode","copilot","cursor"], acc:0.66, aiPct:0.49, st:"On Track",   okr:"Achieve 95% on-time, on-budget project completion rate" },
+        { id:"P28", name:"NXP NiFi Ingestion Engagement",          d:"Delivery",  p:"flywheel",   on:3,  off:7,  plan:98,  del:103, pr:44, cy:3.8, ai:["claudecode","darkforge"], acc:0.70, aiPct:0.58, st:"On Track",   okr:"Ensure World-Class Customer Success and Expansion" },
+
+        // ---- Sales (6) ----
+        { id:"P29", name:"CRM/PSA Consolidation",                  d:"Sales",     p:"duality",    on:2,  off:4,  plan:62,  del:54,  pr:22, cy:5.4, ai:["copilot"], acc:0.50, aiPct:0.28, st:"At Risk",    okr:"Consolidate CRM, ERP, and PSA systems onto a single, integrated platform" },
+        { id:"P30", name:"MEDDPICC Workflow Tooling",              d:"Sales",     p:"talent",     on:1,  off:3,  plan:34,  del:36,  pr:14, cy:4.0, ai:["copilot","chatgpt"], acc:0.57, aiPct:0.36, st:"On Track",   okr:"Achieve 100% adoption of our defined MEDDPICC sales methodology" },
+        { id:"P31", name:"Co-Sell Portal (AWS/Azure)",             d:"Sales",     p:"troika",     on:2,  off:4,  plan:58,  del:51,  pr:23, cy:4.7, ai:["copilot","cursor"], acc:0.55, aiPct:0.34, st:"On Track",   okr:"Generate 30% of total sales pipeline through hyperscaler co-sell channels" },
+        { id:"P32", name:"Deal Desk Automation",                   d:"Sales",     p:"flywheel",   on:1,  off:3,  plan:38,  del:32,  pr:13, cy:5.2, ai:["copilot","chatgpt"], acc:0.49, aiPct:0.27, st:"At Risk",    okr:"Reduce average contract negotiation cycle time by 30%" },
+        { id:"P33", name:"Sales Enablement Hub",                   d:"Sales",     p:"talent",     on:2,  off:2,  plan:40,  del:42,  pr:16, cy:3.9, ai:["copilot","claudecode"], acc:0.60, aiPct:0.41, st:"On Track",   okr:"Implement a rigorous sales training and certification program" },
+        { id:"P34", name:"Vertical Solutions Library",             d:"Sales",     p:"duality",    on:2,  off:3,  plan:48,  del:44,  pr:19, cy:4.3, ai:["claudecode","copilot"], acc:0.62, aiPct:0.43, st:"On Track",   okr:"Create 3 dedicated industry verticals with Vertical Leads" },
+
+        // ---- Marketing (8) ----
+        { id:"P35", name:"Blueprint Website Relaunch",             d:"Marketing", p:"flywheel",   on:3,  off:5,  plan:88,  del:81,  pr:36, cy:4.2, ai:["cursor","copilot","claudecode"], acc:0.63, aiPct:0.48, st:"On Track",   okr:"Relaunch the Blueprint website with new product-focused messaging" },
+        { id:"P36", name:"Strategy Hub Knowledge Base",            d:"Marketing", p:"flywheel",   on:2,  off:3,  plan:64,  del:69,  pr:28, cy:3.6, ai:["claudecode","cursor"], acc:0.71, aiPct:0.62, st:"On Track",   okr:"Establish Premier Thought Leadership in the Databricks Ecosystem" },
+        { id:"P37", name:"CampaignIQ Marketplace Site",            d:"Marketing", p:"flywheel",   on:2,  off:4,  plan:56,  del:48,  pr:22, cy:4.6, ai:["cursor","copilot"], acc:0.58, aiPct:0.39, st:"At Risk",    okr:"Drive Predictable, High-Quality Pipeline for New Customer Acquisition" },
+        { id:"P38", name:"State of Databricks Report Platform",    d:"Marketing", p:"flywheel",   on:1,  off:3,  plan:36,  del:38,  pr:15, cy:3.8, ai:["claudecode","chatgpt"], acc:0.65, aiPct:0.50, st:"On Track",   okr:"Publish a definitive 'State of Databricks' annual report" },
+        { id:"P39", name:"Webinar Platform Integration",           d:"Marketing", p:"flywheel",   on:1,  off:3,  plan:32,  del:30,  pr:12, cy:4.0, ai:["copilot"], acc:0.54, aiPct:0.33, st:"On Track",   okr:"Host 12 webinars with an average attendance of 200 people" },
+        { id:"P40", name:"ABM Campaign Orchestration",             d:"Marketing", p:"flywheel",   on:2,  off:3,  plan:46,  del:43,  pr:18, cy:4.1, ai:["copilot","chatgpt"], acc:0.56, aiPct:0.37, st:"On Track",   okr:"Launch targeted ABM campaigns against our top 50 target accounts" },
+        { id:"P41", name:"Awards Submission Tracker",              d:"Marketing", p:"flywheel",   on:1,  off:2,  plan:24,  del:26,  pr:10, cy:3.5, ai:["copilot"], acc:0.59, aiPct:0.40, st:"On Track",   okr:"Win a major Databricks Partner of the Year award" },
+        { id:"P42", name:"Customer Reference Program Tool",        d:"Marketing", p:"flywheel",   on:1,  off:3,  plan:30,  del:25,  pr:11, cy:4.8, ai:["copilot"], acc:0.51, aiPct:0.30, st:"At Risk",    okr:"Establish a formal customer reference program with 20 active participants" },
+
+        // ---- Operations (8) ----
+        { id:"P43", name:"OKR Software Platform",                  d:"Operations",p:"duality",    on:2,  off:3,  plan:42,  del:39,  pr:17, cy:4.2, ai:["copilot","claudecode"], acc:0.61, aiPct:0.42, st:"On Track",   okr:"Select and implement a dedicated OKR software platform by Q1" },
+        { id:"P44", name:"Builder/Scaler Career Portal",           d:"Operations",p:"talent",     on:2,  off:2,  plan:38,  del:34,  pr:14, cy:4.5, ai:["copilot"], acc:0.53, aiPct:0.32, st:"On Track",   okr:"Implement the 'Builder vs. Scaler' Dual-Career Talent Model" },
+        { id:"P45", name:"Financial Systems Re-architecture",      d:"Operations",p:"duality",    on:3,  off:5,  plan:96,  del:78,  pr:33, cy:6.2, ai:["copilot","chatgpt"], acc:0.47, aiPct:0.25, st:"At Risk",    okr:"Re-architect Financial and IT Systems for a Product-Led Business" },
+        { id:"P46", name:"ERP Consolidation",                      d:"Operations",p:"duality",    on:2,  off:4,  plan:74,  del:58,  pr:24, cy:6.8, ai:["copilot"], acc:0.45, aiPct:0.23, st:"At Risk",    okr:"Consolidate CRM, ERP, and PSA systems onto a single integrated platform" },
+        { id:"P47", name:"eNPS & Engagement Platform",             d:"Operations",p:"talent",     on:1,  off:3,  plan:32,  del:34,  pr:13, cy:3.7, ai:["copilot","claudecode"], acc:0.62, aiPct:0.43, st:"On Track",   okr:"Increase our employee Net Promoter Score (eNPS) from +20 to +45" },
+        { id:"P48", name:"Onboarding Automation",                  d:"Operations",p:"talent",     on:1,  off:3,  plan:34,  del:36,  pr:14, cy:3.6, ai:["claudecode","copilot"], acc:0.64, aiPct:0.46, st:"On Track",   okr:"Develop a structured, 4-week onboarding program for all new hires" },
+        { id:"P49", name:"Contract Templating System",             d:"Operations",p:"duality",    on:1,  off:3,  plan:36,  del:31,  pr:13, cy:4.6, ai:["copilot","chatgpt"], acc:0.52, aiPct:0.31, st:"On Track",   okr:"Create standardized, templatized contracts for all product and service offerings" },
+        { id:"P50", name:"DSO Reduction Workflow",                 d:"Operations",p:"duality",    on:1,  off:2,  plan:28,  del:30,  pr:11, cy:3.9, ai:["copilot","claudecode"], acc:0.60, aiPct:0.41, st:"On Track",   okr:"Reduce Days Sales Outstanding (DSO) from 60 to 45 days" }
+    ];
+
+    // Pre-compute derived fields
+    PROJECTS.forEach(p => {
+        p.team = p.on + p.off;
+        p.variance = (p.del - p.plan) / p.plan;
+        p.onPct = p.on / p.team;
+        p.offPct = p.off / p.team;
+        if (p.variance >= -0.05) p.health = "green";
+        else if (p.variance >= -0.15) p.health = "yellow";
+        else p.health = "red";
+        if (p.st === "At Risk" && p.health === "green") p.health = "yellow";
+    });
+
+    // ===========================================================
+    // STATE & FILTERING
+    // ===========================================================
+    let filterState = { dept: "all", pillar: "all", location: "all", ai: "all", search: "", sort: "variance" };
+
+    function applyFilters() {
+        const s = filterState.search.toLowerCase();
+        return PROJECTS.filter(p => {
+            if (filterState.dept !== "all" && p.d !== filterState.dept) return false;
+            if (filterState.pillar !== "all" && p.p !== filterState.pillar) return false;
+            if (filterState.ai !== "all" && !p.ai.includes(filterState.ai)) return false;
+            if (filterState.location === "onshore" && p.onPct <= 0.6) return false;
+            if (filterState.location === "offshore" && p.offPct <= 0.6) return false;
+            if (filterState.location === "balanced" && (p.onPct > 0.6 || p.offPct > 0.6)) return false;
+            if (s && !(p.name.toLowerCase().includes(s) || p.okr.toLowerCase().includes(s) || p.d.toLowerCase().includes(s))) return false;
+            return true;
+        });
+    }
+
+    function sortProjects(arr) {
+        const dir = filterState.sort === "name" ? 1 : -1;
+        return [...arr].sort((a, b) => {
+            const av = a[filterState.sort], bv = b[filterState.sort];
+            if (typeof av === "string") return av.localeCompare(bv) * dir;
+            return (bv - av) * (dir === 1 ? -1 : 1);
+        });
+    }
+
+    // ===========================================================
+    // KPI RENDERING
+    // ===========================================================
+    function renderKPIs(projects) {
+        const totalOn = projects.reduce((s,p) => s + p.on, 0);
+        const totalOff = projects.reduce((s,p) => s + p.off, 0);
+        const totalDel = projects.reduce((s,p) => s + p.del, 0);
+        const totalPlan = projects.reduce((s,p) => s + p.plan, 0);
+        const avgVar = projects.length ? projects.reduce((s,p) => s + p.variance, 0) / projects.length : 0;
+        const avgAI = projects.length ? projects.reduce((s,p) => s + p.aiPct, 0) / projects.length : 0;
+        const toolsUsed = new Set(); projects.forEach(p => p.ai.forEach(t => toolsUsed.add(t)));
+        const green = projects.filter(p => p.health === "green").length;
+        const yellow = projects.filter(p => p.health === "yellow").length;
+        const red = projects.filter(p => p.health === "red").length;
+
+        document.getElementById("kpi-engineers").textContent = (totalOn + totalOff).toLocaleString();
+        document.getElementById("kpi-onshore").textContent = totalOn;
+        document.getElementById("kpi-offshore").textContent = totalOff;
+        document.getElementById("kpi-projects").textContent = projects.length;
+        document.getElementById("kpi-delivered").textContent = totalDel.toLocaleString();
+        document.getElementById("kpi-planned").textContent = totalPlan.toLocaleString();
+        const vEl = document.getElementById("kpi-variance");
+        const vPct = (avgVar * 100).toFixed(1);
+        vEl.textContent = (avgVar >= 0 ? "+" : "") + vPct + "%";
+        vEl.className = "text-3xl font-bold mt-1 " + (avgVar >= -0.02 ? "text-emerald-400" : avgVar >= -0.10 ? "text-amber-400" : "text-red-400");
+        document.getElementById("kpi-aicode").textContent = (avgAI * 100).toFixed(0) + "%";
+        document.getElementById("kpi-aitools").textContent = toolsUsed.size;
+        document.getElementById("kpi-green").textContent = green;
+        document.getElementById("kpi-yellow").textContent = yellow;
+        document.getElementById("kpi-red").textContent = red;
+        document.getElementById("filter-count").textContent = projects.length;
+    }
+
+    // ===========================================================
+    // CHARTS
+    // ===========================================================
+    let charts = {};
+    Chart.defaults.color = "#9ca3af";
+    Chart.defaults.font.family = "DM Sans";
+    Chart.defaults.borderColor = "rgba(75,85,99,0.3)";
+
+    function destroyCharts() { Object.values(charts).forEach(c => c && c.destroy()); charts = {}; }
+
+    function renderCharts(projects) {
+        destroyCharts();
+
+        // 1) Trend — synthesize 12 months of throughput, scaled to current filter
+        const months = ["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar","Apr"];
+        const totalOn = projects.reduce((s,p)=>s+p.on,0);
+        const totalOff = projects.reduce((s,p)=>s+p.off,0);
+        // Per-engineer baseline points/month, with growth + AI uplift over time
+        const growth = [0.78,0.82,0.85,0.88,0.90,0.92,0.95,0.97,0.99,1.02,1.05,1.08];
+        const onSeries  = growth.map(g => Math.round(totalOn  * 4.2 * g));
+        const offSeries = growth.map(g => Math.round(totalOff * 3.6 * g));
+
+        charts.trend = new Chart(document.getElementById("chart-trend"), {
+            type: "line",
+            data: {
+                labels: months,
+                datasets: [
+                    { label: "On-shore", data: onSeries,  borderColor: "#3b82f6", backgroundColor: "rgba(59,130,246,0.15)", fill: true, tension: 0.3, borderWidth: 2 },
+                    { label: "Off-shore", data: offSeries, borderColor: "#a855f7", backgroundColor: "rgba(168,85,247,0.15)", fill: true, tension: 0.3, borderWidth: 2 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: "bottom", labels: { boxWidth: 12 } } },
+                scales: {
+                    x: { grid: { color: "rgba(75,85,99,0.2)" } },
+                    y: { grid: { color: "rgba(75,85,99,0.2)" }, beginAtZero: true, title: { display: true, text: "Story Points" } }
+                }
+            }
+        });
+
+        // 2) AI tool mix
+        const toolCount = {};
+        projects.forEach(p => p.ai.forEach(t => toolCount[t] = (toolCount[t] || 0) + 1));
+        const toolEntries = AI_TOOLS.filter(t => toolCount[t.id]).map(t => ({ ...t, count: toolCount[t.id] }));
+        charts.aimix = new Chart(document.getElementById("chart-aimix"), {
+            type: "doughnut",
+            data: {
+                labels: toolEntries.map(t => t.name),
+                datasets: [{ data: toolEntries.map(t => t.count), backgroundColor: toolEntries.map(t => t.color), borderColor: "#0b1220", borderWidth: 2 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, cutout: "60%",
+                plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 11 } } } }
+            }
+        });
+
+        // 3) On-shore vs Off-shore — per-engineer normalized
+        const perOnDel = totalOn  ? projects.reduce((s,p)=>s + p.del * p.onPct,  0) / totalOn  : 0;
+        const perOffDel= totalOff ? projects.reduce((s,p)=>s + p.del * p.offPct, 0) / totalOff : 0;
+        const perOnPR  = totalOn  ? projects.reduce((s,p)=>s + p.pr * p.onPct,   0) / totalOn  : 0;
+        const perOffPR = totalOff ? projects.reduce((s,p)=>s + p.pr * p.offPct,  0) / totalOff : 0;
+        // weighted-avg cycle time per shore
+        const onCycle  = totalOn  ? projects.reduce((s,p)=>s + p.cy * p.on,  0) / totalOn  : 0;
+        const offCycle = totalOff ? projects.reduce((s,p)=>s + p.cy * p.off, 0) / totalOff : 0;
+        charts.shore = new Chart(document.getElementById("chart-shore"), {
+            type: "bar",
+            data: {
+                labels: ["Story Pts / Eng", "PRs / Eng", "Cycle Time (days)"],
+                datasets: [
+                    { label: "On-shore",  data: [perOnDel.toFixed(1),  perOnPR.toFixed(1),  onCycle.toFixed(2)],  backgroundColor: "#3b82f6" },
+                    { label: "Off-shore", data: [perOffDel.toFixed(1), perOffPR.toFixed(1), offCycle.toFixed(2)], backgroundColor: "#a855f7" }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: "bottom", labels: { boxWidth: 12 } } },
+                scales: { x: { grid: { color: "rgba(75,85,99,0.2)" } }, y: { grid: { color: "rgba(75,85,99,0.2)" }, beginAtZero: true } }
+            }
+        });
+
+        // 4) Variance distribution buckets
+        const buckets = { "< -20%": 0, "-20 to -10%": 0, "-10 to -5%": 0, "-5 to 0%": 0, "0 to +5%": 0, "> +5%": 0 };
+        projects.forEach(p => {
+            const v = p.variance;
+            if (v < -0.20) buckets["< -20%"]++;
+            else if (v < -0.10) buckets["-20 to -10%"]++;
+            else if (v < -0.05) buckets["-10 to -5%"]++;
+            else if (v < 0) buckets["-5 to 0%"]++;
+            else if (v < 0.05) buckets["0 to +5%"]++;
+            else buckets["> +5%"]++;
+        });
+        const bcolors = ["#ef4444","#f87171","#f59e0b","#fbbf24","#34d399","#10b981"];
+        charts.variance = new Chart(document.getElementById("chart-variance"), {
+            type: "bar",
+            data: {
+                labels: Object.keys(buckets),
+                datasets: [{ label: "Projects", data: Object.values(buckets), backgroundColor: bcolors, borderRadius: 4 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { x: { grid: { display: false } }, y: { grid: { color: "rgba(75,85,99,0.2)" }, beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        // 5) Throughput by Pillar
+        const pillarTotals = {};
+        PILLARS.forEach(p => pillarTotals[p.id] = 0);
+        projects.forEach(p => pillarTotals[p.p] += p.del);
+        charts.pillar = new Chart(document.getElementById("chart-pillar"), {
+            type: "bar",
+            data: {
+                labels: PILLARS.map(p => p.name),
+                datasets: [{ label: "Story Points Delivered", data: PILLARS.map(p => pillarTotals[p.id]), backgroundColor: PILLARS.map(p => p.color), borderRadius: 4 }]
+            },
+            options: {
+                indexAxis: "y", responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { x: { grid: { color: "rgba(75,85,99,0.2)" }, beginAtZero: true }, y: { grid: { display: false } } }
+            }
+        });
+
+        // 6) AI Acceptance rate by tool — weighted average across projects using each tool
+        const toolAccTotals = {}; const toolAccCount = {};
+        projects.forEach(p => p.ai.forEach(t => {
+            toolAccTotals[t] = (toolAccTotals[t] || 0) + p.acc;
+            toolAccCount[t]  = (toolAccCount[t]  || 0) + 1;
+        }));
+        const accTools = AI_TOOLS.filter(t => toolAccCount[t.id]);
+        charts.acceptance = new Chart(document.getElementById("chart-acceptance"), {
+            type: "bar",
+            data: {
+                labels: accTools.map(t => t.name),
+                datasets: [{ label: "Acceptance %", data: accTools.map(t => Math.round(100 * toolAccTotals[t.id] / toolAccCount[t.id])), backgroundColor: accTools.map(t => t.color), borderRadius: 4 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => c.parsed.y + "%" } } },
+                scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { grid: { color: "rgba(75,85,99,0.2)" }, beginAtZero: true, max: 100, ticks: { callback: v => v + "%" } } }
+            }
+        });
+    }
+
+    // ===========================================================
+    // INITIATIVE ROLLUP
+    // ===========================================================
+    function renderInitiatives(projects) {
+        const grid = document.getElementById("initiative-grid");
+        grid.innerHTML = "";
+        PILLARS.forEach(pillar => {
+            const subset = projects.filter(p => p.p === pillar.id);
+            if (subset.length === 0) return;
+            const plan = subset.reduce((s,p)=>s+p.plan,0);
+            const del  = subset.reduce((s,p)=>s+p.del,0);
+            const pct  = plan ? Math.round(100*del/plan) : 0;
+            const variance = plan ? ((del-plan)/plan*100).toFixed(1) : 0;
+            const eng = subset.reduce((s,p)=>s+p.team,0);
+            const avgAI = subset.length ? Math.round(100 * subset.reduce((s,p)=>s+p.aiPct,0) / subset.length) : 0;
+            const onEng = subset.reduce((s,p)=>s+p.on,0);
+            const offEng = subset.reduce((s,p)=>s+p.off,0);
+            const vClass = variance >= -2 ? "text-emerald-400" : variance >= -10 ? "text-amber-400" : "text-red-400";
+
+            const card = document.createElement("div");
+            card.className = "panel p-4 hover:border-blue-500 transition-colors";
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-2">
+                    <div>
+                        <div class="text-xs uppercase tracking-wider" style="color:${pillar.color}">${pillar.name}</div>
+                        <div class="text-xl font-bold text-white mt-1">${subset.length} projects</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-white">${pct}%</div>
+                        <div class="text-xs text-gray-500">delivered</div>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-800 rounded-full h-2 mb-3">
+                    <div class="h-2 rounded-full" style="width:${Math.min(pct,100)}%;background-color:${pillar.color}"></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div><span class="text-gray-500">Delivered</span><div class="text-white font-semibold">${del.toLocaleString()} pts</div></div>
+                    <div><span class="text-gray-500">Planned</span><div class="text-white font-semibold">${plan.toLocaleString()} pts</div></div>
+                    <div><span class="text-gray-500">Variance</span><div class="font-semibold ${vClass}">${variance >= 0 ? "+" : ""}${variance}%</div></div>
+                    <div><span class="text-gray-500">AI usage</span><div class="text-emerald-400 font-semibold">${avgAI}%</div></div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-gray-700 flex items-center justify-between text-xs">
+                    <span class="text-gray-400">${eng} engineers</span>
+                    <span><span class="badge badge-onshore">${onEng} on</span> <span class="badge badge-offshore">${offEng} off</span></span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // ===========================================================
+    // PROJECT TABLE
+    // ===========================================================
+    function renderTable(projects) {
+        const tbody = document.getElementById("proj-tbody");
+        tbody.innerHTML = "";
+        const sorted = sortProjects(projects);
+        sorted.forEach(p => {
+            const v = (p.variance * 100).toFixed(1);
+            const vc = p.variance >= -0.02 ? "variance-pos" : p.variance >= -0.10 ? "variance-flat" : "variance-neg";
+            const pillar = PILLARS.find(x => x.id === p.p);
+            const aiNames = p.ai.map(id => AI_TOOLS.find(t => t.id === id)).filter(Boolean);
+
+            const row = document.createElement("tr");
+            row.className = "proj-row border-b border-gray-800";
+            row.innerHTML = `
+                <td class="py-3 px-2"><span class="health-${p.health} inline-block w-3 h-3 rounded-full"></span></td>
+                <td class="py-3 px-2"><div class="text-white font-medium">${p.name}</div><div class="text-xs text-gray-500">${p.id}</div></td>
+                <td class="py-3 px-2 text-gray-400">${p.d}</td>
+                <td class="py-3 px-2"><span class="badge badge-pillar">${pillar.name}</span></td>
+                <td class="py-3 px-2 text-right text-gray-300">${p.team} <span class="text-xs text-gray-500">(${p.on}/${p.off})</span></td>
+                <td class="py-3 px-2 text-right text-gray-400">${p.plan}</td>
+                <td class="py-3 px-2 text-right text-white font-semibold">${p.del}</td>
+                <td class="py-3 px-2 text-right ${vc} font-semibold">${p.variance >= 0 ? "+" : ""}${v}%</td>
+                <td class="py-3 px-2 text-right text-gray-300">${p.pr}</td>
+                <td class="py-3 px-2 text-right text-gray-300">${p.cy.toFixed(1)}</td>
+                <td class="py-3 px-2 text-right text-emerald-400 font-semibold">${Math.round(p.aiPct*100)}%</td>
+                <td class="py-3 px-2"><span class="text-xs ${p.st === 'On Track' ? 'text-emerald-400' : 'text-amber-400'}">${p.st}</span></td>
+            `;
+            const detail = document.createElement("tr");
+            detail.className = "detail-row hidden";
+            detail.innerHTML = `
+                <td colspan="12" class="px-6 py-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div>
+                            <div class="text-gray-500 uppercase tracking-wider mb-1">Linked OKR</div>
+                            <div class="text-gray-200">${p.okr}</div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 uppercase tracking-wider mb-1">Team Composition</div>
+                            <div class="flex gap-2 mb-2">
+                                <span class="badge badge-onshore">${p.on} On-shore (${Math.round(p.onPct*100)}%)</span>
+                                <span class="badge badge-offshore">${p.off} Off-shore (${Math.round(p.offPct*100)}%)</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2 flex overflow-hidden">
+                                <div class="h-2 bg-blue-500" style="width:${p.onPct*100}%"></div>
+                                <div class="h-2 bg-purple-500" style="width:${p.offPct*100}%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="text-gray-500 uppercase tracking-wider mb-1">AI Tooling — ${Math.round(p.acc*100)}% acceptance</div>
+                            <div>${aiNames.map(t => `<span class="badge badge-ai">${t.name} <span class="opacity-60">· ${t.category}</span></span>`).join("")}</div>
+                            <div class="text-gray-400 mt-2">${Math.round(p.aiPct*100)}% of code AI-assisted this quarter</div>
+                        </div>
+                    </div>
+                </td>
+            `;
+            row.addEventListener("click", () => detail.classList.toggle("hidden"));
+            tbody.appendChild(row);
+            tbody.appendChild(detail);
+        });
+    }
+
+    // ===========================================================
+    // FILTER WIRING
+    // ===========================================================
+    function populateFilters() {
+        const depts = [...new Set(PROJECTS.map(p => p.d))].sort();
+        const deptSel = document.getElementById("filter-dept");
+        deptSel.innerHTML = `<option value="all">All Departments</option>` + depts.map(d => `<option value="${d}">${d}</option>`).join("");
+
+        const pSel = document.getElementById("filter-pillar");
+        pSel.innerHTML = `<option value="all">All Pillars</option>` + PILLARS.map(p => `<option value="${p.id}">${p.name}</option>`).join("");
+
+        const aSel = document.getElementById("filter-ai");
+        aSel.innerHTML = `<option value="all">All AI Tools</option>` + AI_TOOLS.map(t => `<option value="${t.id}">${t.name}</option>`).join("");
+
+        deptSel.addEventListener("change", e => { filterState.dept = e.target.value; refresh(); });
+        pSel.addEventListener("change", e => { filterState.pillar = e.target.value; refresh(); });
+        aSel.addEventListener("change", e => { filterState.ai = e.target.value; refresh(); });
+        document.getElementById("filter-location").addEventListener("change", e => { filterState.location = e.target.value; refresh(); });
+        document.getElementById("filter-search").addEventListener("input", e => { filterState.search = e.target.value; refresh(); });
+
+        document.querySelectorAll(".sort-btn").forEach(btn => {
+            btn.addEventListener("click", () => { filterState.sort = btn.dataset.sort; refresh(); });
+        });
+    }
+
+    function refresh() {
+        const filtered = applyFilters();
+        renderKPIs(filtered);
+        renderCharts(filtered);
+        renderInitiatives(filtered);
+        renderTable(filtered);
+    }
+
+    populateFilters();
+    refresh();
+    </script>
+</body>
+</html>
